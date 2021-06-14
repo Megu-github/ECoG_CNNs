@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #https://ohke.hateblo.jp/entry/2019/12/28/230000
 
-import random
+
 from pathlib import Path
-import urllib.request
 import datetime
 import csv
 import os
@@ -12,12 +11,10 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
-import pandas as pd
 
 import torch
 import torch.optim as optim
 import torch.utils.data as data
-from torchvision import transforms
 import torch.nn as nn
 
 
@@ -25,12 +22,15 @@ import torch.nn as nn
 BATCH_SIZE = 16
 WEIGHT_DECAY = 0.005
 LEARNING_RATE = 0.0001
-EPOCH = 20
+EPOCH = 1
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 DATASET_PATH = '/home/megu/CNN_Dataset/ECoG_data_4'
+EXPT_NUMBER = 'MK8_test_final'
 
-
+# 結果を保存するpathを生成
+dirname = os.path.dirname(os.path.abspath(__file__))
+result_dir_path = dirname + '/Result/' + EXPT_NUMBER
 
 
 
@@ -139,10 +139,8 @@ def log_observe(dataloader, name):
 def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_value):
     plt.figure(figsize=(6,6))      #グラフ描画用
 
-    fig_dt = datetime.datetime.now()
-    figure_date = fig_dt.strftime('%Y%m%d')
-    save_acc_dir = 'Image/Accuracy'
-    save_loss_dir = 'Image/Loss'
+    save_dir = result_dir_path
+
 
     #以下グラフ描画
     plt.plot(range(EPOCH), train_loss_value)
@@ -153,7 +151,7 @@ def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_v
     plt.ylabel('LOSS')
     plt.legend(['train loss', 'test loss'])
     plt.title('loss')
-    plt.savefig(os.path.join(save_loss_dir, "loss_image_" + figure_date + "224_224" + ".png"))
+    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_loss_image_.png"))
     plt.clf()
 
     plt.plot(range(EPOCH), train_acc_value)
@@ -164,7 +162,7 @@ def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_v
     plt.ylabel('ACCURACY')
     plt.legend(['train acc', 'test acc'])
     plt.title('accuracy')
-    plt.savefig(os.path.join(save_acc_dir, "accuracy_image_" + figure_date + "224_224" +".png"))
+    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_accuracy_image_.png"))
 
     plt.close()
 
@@ -196,6 +194,9 @@ def writeTxt(file_name, myCheck):
 def main():
     #start
     print("start")
+
+    # make result dir
+    os.makedirs(result_dir_path, exist_ok=True)
 
     #load Dataset
     train_dataset = MyDataset(DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
@@ -230,7 +231,7 @@ def main():
     for epoch in range(1, EPOCH+1):
         dt_now = datetime.datetime.now()
         epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
-        path = "./Log/cnn_20210524_224_224.log"
+        path = result_dir_path + "/" + EXPT_NUMBER + '.log'
         with open(path, 'a') as f:
             print('epoch', epoch, file=f)
             print(epoch_time, file=f)
@@ -301,16 +302,15 @@ def main():
             test_acc_value.append(float(sum_correct/sum_total))
 
 
-    if EPOCH >= 10:
+    if EPOCH >= 1:
         # plot
         plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_value)
 
         # parameter
-        current_path = os.getcwd()                        # パス設定（カレントディレクトリ）
-        file_name = 'CNN_variable.csv'                             # 検索ファイル名を設定
-        file_path = os.path.join(current_path, file_name)
+        file_name = EXPT_NUMBER + '_variable.csv'                             # 検索ファイル名を設定
+        file_path = os.path.join(result_dir_path, file_name)
         myCheck = os.path.isfile(file_path)
-        writeTxt(file_name, myCheck)
+        writeTxt(file_path, myCheck)
 
 
     print("finish")
