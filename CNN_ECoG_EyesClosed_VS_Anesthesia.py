@@ -22,11 +22,11 @@ import torch.nn as nn
 BATCH_SIZE = 16
 WEIGHT_DECAY = 0.005
 LEARNING_RATE = 0.0001
-EPOCH = 1
+EPOCH = 20
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
-DATASET_PATH = '/home/megu/CNN_Dataset/ECoG_data_4'
-EXPT_NUMBER = 'MK8_test_final'
+DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.1' # セーバーにDATASETをコピーして、そのpathを書く
+EXPT_NUMBER = 'MK1_expt.1'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -302,7 +302,7 @@ def main():
             test_acc_value.append(float(sum_correct/sum_total))
 
 
-    if EPOCH >= 1:
+    if EPOCH >= 10:
         # plot
         plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_value)
 
