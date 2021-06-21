@@ -92,9 +92,9 @@ class MyDataset(data.Dataset):
         image = np.transpose(image, (2, 0, 1))
         image = torch.from_numpy(image).float()
 
-        # ラベル (0: Eyes_Closed, 1: Anesthesia)
+        # ラベル (0: EyesClosed, 1: Anesthetized)
         label = p.split("/")[6]     #ここはpath名が変わると変更することになるので、いつかうまい具合に書き換える
-        label = 1 if label == "Anesthesia" else 0
+        label = 1 if label == "Anesthetized" else 0
 
         return image, label
 
