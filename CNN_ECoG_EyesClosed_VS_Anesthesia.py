@@ -94,7 +94,7 @@ class MyDataset(data.Dataset):
 
         # ラベル (0: Eyes_Closed, 1: Anesthesia)
         label = p.split("/")[6]     #ここはpath名が変わると変更することになるので、いつかうまい具合に書き換える
-        label = 1 if label == "Anesthesia" else 0
+        label = 1 if label == "Anesthetized" else 0
 
         return image, label
 
