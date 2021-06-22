@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l select=1:ncpus=1:mem=8G:ngpus=1
+#PBS -l select=1:ncpus=1:mem=10G:ngpus=1
 #PBS -N CNN_ECoG
 #PBS -j oe
 
