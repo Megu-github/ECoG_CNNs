@@ -25,8 +25,8 @@ LEARNING_RATE = 0.0001
 EPOCH = 20
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
-DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'MK1_expt.3'
+DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.5' # セーバーにDATASETをコピーして、そのpathを書く
+EXPT_NUMBER = 'MK1_expt.5'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -92,7 +92,7 @@ class MyDataset(data.Dataset):
         image = np.transpose(image, (2, 0, 1))
         image = torch.from_numpy(image).float()
 
-        # ラベル (0: Eyes_Closed, 1: Anesthesia)
+        # ラベル (0: EyesClosed, 1: Anesthetized)
         label = p.split("/")[6]     #ここはpath名が変わると変更することになるので、いつかうまい具合に書き換える
         label = 1 if label == "Anesthetized" else 0
 
