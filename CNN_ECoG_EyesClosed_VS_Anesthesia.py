@@ -151,7 +151,7 @@ def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_v
     plt.ylabel('LOSS')
     plt.legend(['train loss', 'test loss'])
     plt.title('loss')
-    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_loss_image_.png"))
+    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_loss_image.png"))
     plt.clf()
 
     plt.plot(range(EPOCH), train_acc_value)
@@ -162,7 +162,7 @@ def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_v
     plt.ylabel('ACCURACY')
     plt.legend(['train acc', 'test acc'])
     plt.title('accuracy')
-    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_accuracy_image_.png"))
+    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_accuracy_image.png"))
 
     plt.close()
 
