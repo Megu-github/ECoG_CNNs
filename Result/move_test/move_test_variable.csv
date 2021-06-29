@@ -1,0 +1,2 @@
+Date,Dataset,BATCH_SIZE,WEIGHT_DECAY,LEARNING_RATE,EPOCH,RESIZE,DEVICE,Accuracy_Image_Name,Loss_Image_Name,Log_File_Name
+2021-06-23 08:29:44,/home/megu/CNN_Dataset/MK3_expt.1,16,0.005,0.0001,3,"[224, 224]",cuda,accuracy_image_20210623.png,loss_image_20210623.png,cnn_20210623.log
