@@ -25,6 +25,7 @@ LEARNING_RATE = 0.0001
 EPOCH = 20
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
+
 DATASET_PATH = '/home/megu/CNN_Dataset/MK3_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
 EXPT_NUMBER = 'MK3_expt.3'
 
