@@ -25,8 +25,8 @@ LEARNING_RATE = 0.0001
 EPOCH = 20
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
-DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.5' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'MK1_expt.5'
+DATASET_PATH = '/home/megu/CNN_Dataset/MK3_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
+EXPT_NUMBER = 'MK3_expt.3'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -151,7 +151,7 @@ def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_v
     plt.ylabel('LOSS')
     plt.legend(['train loss', 'test loss'])
     plt.title('loss')
-    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_loss_image_.png"))
+    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_loss_image.png"))
     plt.clf()
 
     plt.plot(range(EPOCH), train_acc_value)
@@ -162,7 +162,7 @@ def plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_v
     plt.ylabel('ACCURACY')
     plt.legend(['train acc', 'test acc'])
     plt.title('accuracy')
-    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_accuracy_image_.png"))
+    plt.savefig(os.path.join(save_dir, EXPT_NUMBER + "_accuracy_image.png"))
 
     plt.close()
 
