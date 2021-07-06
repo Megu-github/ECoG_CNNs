@@ -26,8 +26,8 @@ EPOCH = 20
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK3_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'MK3_expt.3'
+DATASET_PATH = '/home/megu/CNN_Dataset/MK10_expt.2' # セーバーにDATASETをコピーして、そのpathを書く
+EXPT_NUMBER = 'MK10_expt.2'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -36,7 +36,7 @@ result_dir_path = dirname + '/Result/' + EXPT_NUMBER
 
 
 # PytorchでのCNNのモデル作り
-# モデルは次のサイトを参考にした　https://qiita.com/mathlive/items/8e1f9a8467fff8dfd03c
+# モデルは次のサイトを参考にした　https://qiita.com/mathlive/items/8e1f）9a8467fff8dfd03c
 class CNNs(nn.Module):
     def __init__(self):
         super(CNNs, self).__init__()
