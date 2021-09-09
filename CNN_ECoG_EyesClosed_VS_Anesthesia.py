@@ -26,8 +26,8 @@ EPOCH = 50
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK11_expt.4' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'MK11_expt.4'
+DATASET_PATH = '/home/megu/CNN_Dataset/MK11_expt.1' # セーバーにDATASETをコピーして、そのpathを書く
+EXPT_NUMBER = 'MK11_expt.1_2'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
