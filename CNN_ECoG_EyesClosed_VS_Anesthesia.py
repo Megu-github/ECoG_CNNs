@@ -19,15 +19,15 @@ import torch.nn as nn
 
 
 # グローバル変数
-BATCH_SIZE = 16
+BATCH_SIZE = 20
 WEIGHT_DECAY = 0.005
 LEARNING_RATE = 0.0001
 EPOCH = 50
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK12_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'MK12_expt.3_2'
+DATASET_PATH = '/home/megu/CNN_Dataset/MK12_expt.4' # セーバーにDATASETをコピーして、そのpathを書く
+EXPT_NUMBER = 'MK12_expt.4_2'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -193,8 +193,6 @@ def writeTxt(file_name, myCheck):
 
 
 def main():
-    #start
-    print("start")
 
     # make result dir
     os.makedirs(result_dir_path, exist_ok=True)
@@ -246,6 +244,8 @@ def main():
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
+
+
 
         # validation(パラメータ更新なし)
         # train_loss_value, train_acc_value = log_observe(train_dataloader, "train")
@@ -303,6 +303,10 @@ def main():
             test_acc_value.append(float(sum_correct/sum_total))
 
 
+    model_path = 'model.pth'
+    torch.save(net.state_dict(), model_path)
+
+
     if EPOCH >= 10:
         # plot
         plot_loss_acc(train_loss_value, test_loss_value, train_acc_value, test_acc_value)
@@ -313,8 +317,10 @@ def main():
         myCheck = os.path.isfile(file_path)
         writeTxt(file_path, myCheck)
 
+    model_path = 'net.pth'
+    torch.save(net.state_dict(), model_path)
 
-    print("finish")
+
 
 
     return
