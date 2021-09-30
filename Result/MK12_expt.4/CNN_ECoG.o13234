@@ -1,0 +1,4 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-1ce72701-f930-8001-09eb-a082cba45729
