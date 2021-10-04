@@ -9,3 +9,5 @@ CNN_ECoG.o12192
 
 __pycache__/
 model.pth
+
+visualize_pytorch/
