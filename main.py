@@ -24,7 +24,7 @@ EPOCH = 1
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK12_expt.4' # セーバーにDATASETをコピーして、そのpathを書く
+DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
 EXPT_NUMBER = 'move_test'
 
 
@@ -44,7 +44,7 @@ def main():
 
 
     test_dataloader = data.DataLoader(
-        test_dataset, batch_size=BATCH_SIZE, shuffle=True,
+        test_dataset, batch_size=BATCH_SIZE, shuffle=False,
         num_workers=0, drop_last=True
     )
 
