@@ -12,34 +12,21 @@ import model
 import Dataset
 from parameters import *
 
+
+
+
 classes = ('Anesthetized', 'EyesClosed')
-
-
-# グローバル変数
-
-
-
-EPOCH = 1
-RESIZE = [224, 224]
-DEVICE = "cuda" # サーバー上なら"cuda"
-
-DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'move_test'
-
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
-result_dir_path = dirname + '/Result/' + EXPT_NUMBER
-path = result_dir_path + "/" + EXPT_NUMBER + '.log'
+result_dir_path = dirname + '/Result/' + TEST_EXPT_NUMBER
+path = result_dir_path + "/" + TEST_EXPT_NUMBER + '.log'
 
 
 
 def main():
 
-
-
-
-    test_dataset = Dataset.MyDataset(DATASET_PATH + "/test", (RESIZE[0], RESIZE[1]))  #元画像に近い形にリサイズする　小さくする必要ない
+    test_dataset = Dataset.MyDataset(TEST_DATASET_PATH + "/test", (RESIZE[0], RESIZE[1]))  #元画像に近い形にリサイズする　小さくする必要ない
 
 
     test_dataloader = data.DataLoader(
@@ -139,7 +126,7 @@ def main():
     plt.show()
     plt.imsave('moto画像.png', img)
     '''
-    smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=10, n_samples=20)
+    smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
     smooth_cam, _ = smooth_grad(img)
     cv2.imwrite("/home/megu/ECoG_CNNs/Result/move_test/smoothGrad_testimage.png", show_as_gray_image(smooth_cam))
 
