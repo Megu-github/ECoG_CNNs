@@ -13,11 +13,11 @@ import Dataset
 BATCH_SIZE = 20
 WEIGHT_DECAY = 0.005
 LEARNING_RATE = 0.0001
-EPOCH = 5
+EPOCH = 50
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK12_expt.4' # セーバーにDATASETをコピーして、そのpathを書く
+DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
 EXPT_NUMBER = 'file_split'
 
 # 結果を保存するpathを生成

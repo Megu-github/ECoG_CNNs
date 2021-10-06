@@ -1,6 +1,7 @@
 import os
 from PIL.Image import Image
 import matplotlib.pyplot as plt
+from torch._C import is_anomaly_enabled
 import torchvision
 
 import torch
@@ -23,7 +24,7 @@ EPOCH = 1
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK12_expt.4' # セーバーにDATASETをコピーして、そのpathを書く
+DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
 EXPT_NUMBER = 'move_test'
 
 
@@ -43,7 +44,7 @@ def main():
 
 
     test_dataloader = data.DataLoader(
-        test_dataset, batch_size=BATCH_SIZE, shuffle=True,
+        test_dataset, batch_size=BATCH_SIZE, shuffle=False,
         num_workers=0, drop_last=True
     )
 
@@ -118,15 +119,39 @@ def main():
             test_loss_value.append(sum_loss*BATCH_SIZE/len(test_dataloader.dataset))
             test_acc_value.append(float(sum_correct/sum_total))
 
-        images, batch = next(iter(test_dataloader))
-        img = images[0]
-        img = img.unsqueeze(0)
+        images, batches = next(iter(test_dataloader))
+        #print(images.size())
+        #print(batches.size())
 
+
+
+
+        img = images[0]
+        plt.imsave('motoImage.png', img[0])
+
+        img = img.unsqueeze(0)
+        batch = batches[0]
+
+        #print(img.size())
+        #print(img[0].size())
+        #print(f"Label: {batch}")
+        '''
+        plt.imshow(img[0].view(224,224,3))
+        plt.show()
+        plt.imsave('moto画像.png', img)
+        '''
         smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
         smooth_cam, _ = smooth_grad(img)
         cv2.imwrite("/home/megu/ECoG_CNNs/Result/move_test/smoothGrad_testimage.png", show_as_gray_image(smooth_cam))
 
-
+        '''
+        # 可視化して確認する
+        fig, ax = plt.subplots()
+        ax.imshow(images[0][0])
+        ax.axis('off')
+        ax.set_title(f'images, label={label[0]}', fontsize=20)
+        plt.show()
+        '''
 
 
 
