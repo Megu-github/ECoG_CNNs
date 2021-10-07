@@ -3,7 +3,7 @@ import os
 
 import torch
 import torch.optim as optim
-import torch.utils.data as data
+import torch.utils.data
 import torch.nn as nn
 
 import model
@@ -27,18 +27,32 @@ optimizer = optim.SGD(net.parameters(), lr=LEARNING_RATE, momentum=0.9, weight_d
 train_loss_value=[]      #trainingのlossを保持するlist
 train_acc_value=[]       #trainingのaccuracyを保持するlist
 
+
 def learning():
     # make result dir
     os.makedirs(result_dir_path, exist_ok=True)
 
     #load Dataset
-    train_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    trainval_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    n_samples = len(trainval_dataset)
+    train_size = int(n_samples * 0.8)   # ここの割合は要件等
+    val_size = n_samples - train_size
+
+    train_dataset, val_dataset = torch.utils.data.random_split(trainval_dataset, [train_size, val_size])
 
     #load Dataloader
-    train_dataloader = data.DataLoader(
+    train_dataloader = torch.utils.data.DataLoader(
         train_dataset, batch_size=TRAIN_BATCH_SIZE, shuffle=True,
         num_workers=0, drop_last=True
     )
+
+    val_dataloader = torch.utils.data.DataLoader(
+        val_dataset, batch_size=TRAIN_BATCH_SIZE, shuffle=True,
+        num_workers=0, drop_last=True
+    )
+
+
+
 
     #loop of epoch
 
@@ -93,6 +107,7 @@ def learning():
 
         model_path = 'model.pth'
         torch.save(net.state_dict(), model_path)
+
 
 
 

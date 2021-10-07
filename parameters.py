@@ -11,4 +11,4 @@ TEST_BATCH_SIZE = 4
 TRAIN_DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
 TRAIN_EXPT_NUMBER = 'move_test'
 TRAIN_BATCH_SIZE = 16
-EPOCH = 20
+EPOCH = 1
