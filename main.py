@@ -11,7 +11,7 @@ import torch.nn as nn
 
 from visualize_pytorch.src.smoothGrad import *
 import model
-import Dataset
+import dataset
 
 classes = ('Anesthetized', 'EyesClosed')
 
@@ -40,7 +40,7 @@ def main():
 
 
 
-    test_dataset = Dataset.MyDataset(DATASET_PATH + "/test", (RESIZE[0], RESIZE[1]))  #元画像に近い形にリサイズする　小さくする必要ない
+    test_dataset = dataset.MyDataset(DATASET_PATH + "/test", (RESIZE[0], RESIZE[1]))  #元画像に近い形にリサイズする　小さくする必要ない
 
 
     test_dataloader = data.DataLoader(

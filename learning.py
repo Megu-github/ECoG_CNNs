@@ -7,7 +7,7 @@ import torch.utils.data as data
 import torch.nn as nn
 
 import model
-import Dataset
+import dataset
 
 # グローバル変数
 BATCH_SIZE = 20
@@ -40,7 +40,7 @@ def learning():
     os.makedirs(result_dir_path, exist_ok=True)
 
     #load Dataset
-    train_dataset = Dataset.MyDataset(DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    train_dataset = dataset.MyDataset(DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
 
     #load Dataloader
     train_dataloader = data.DataLoader(
