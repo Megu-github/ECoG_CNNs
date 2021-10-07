@@ -8,21 +8,13 @@ import torch.nn as nn
 
 import model
 import dataset
+from parameters import *
 
-# グローバル変数
-BATCH_SIZE = 20
-WEIGHT_DECAY = 0.005
-LEARNING_RATE = 0.0001
-EPOCH = 50
-RESIZE = [224, 224]
-DEVICE = "cuda" # サーバー上なら"cuda"
 
-DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
-EXPT_NUMBER = 'file_split'
 
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
-result_dir_path = dirname + '/Result/' + EXPT_NUMBER
+result_dir_path = dirname + '/Result/' + TRAIN_EXPT_NUMBER
 
 
 
@@ -40,11 +32,11 @@ def learning():
     os.makedirs(result_dir_path, exist_ok=True)
 
     #load Dataset
-    train_dataset = dataset.MyDataset(DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    train_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
 
     #load Dataloader
     train_dataloader = data.DataLoader(
-        train_dataset, batch_size=BATCH_SIZE, shuffle=True,
+        train_dataset, batch_size=TRAIN_BATCH_SIZE, shuffle=True,
         num_workers=0, drop_last=True
     )
 
@@ -54,7 +46,7 @@ def learning():
     for epoch in range(1, EPOCH+1):
         dt_now = datetime.datetime.now()
         epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
-        path = result_dir_path + "/" + EXPT_NUMBER + '.log'
+        path = result_dir_path + "/" + TRAIN_EXPT_NUMBER + '.log'
         with open(path, 'a') as f:
             print('epoch', epoch, file=f)
             print(epoch_time, file=f)
@@ -94,8 +86,8 @@ def learning():
         with open(path, 'a') as f:
 
             print("train mean loss={}, accuracy={}".format(
-                sum_loss*BATCH_SIZE/len(train_dataloader.dataset), float(sum_correct/sum_total)), file=f)  #lossとaccuracy出力
-            train_loss_value.append(sum_loss*BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
+                sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(sum_correct/sum_total)), file=f)  #lossとaccuracy出力
+            train_loss_value.append(sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
             train_acc_value.append(float(sum_correct/sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
 
