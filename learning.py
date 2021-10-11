@@ -8,17 +8,19 @@ import torch.utils.data
 import torch.nn as nn
 from sklearn.model_selection import KFold
 from torch.utils.data.sampler import SubsetRandomSampler
+from CNN_ECoG_EyesClosed_VS_Anesthesia import plot_loss_acc
 
 import model
 import dataset
+import graph
 from parameters import *
 
 
-
+'''
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
 result_dir_path = dirname + '/Result/' + TRAIN_EXPT_NUMBER
-
+'''
 
 
 device = torch.device(DEVICE)
@@ -56,7 +58,6 @@ def learning():
     ## cross val
     splits = KFold(n_splits=5, shuffle=True, random_state=26)   # random_stateの値は要検討
     for fold, (train_idx, val_idx) in enumerate(splits.split(trainval_dataset)):
-        print('Fold {}'.format(fold + 1))
 
         train_sampler = SubsetRandomSampler(train_idx)
         val_sampler = SubsetRandomSampler(val_idx)
@@ -80,7 +81,7 @@ def learning():
             epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
             path = result_dir_path + "/" + TRAIN_EXPT_NUMBER + '.log'
             with open(path, 'a') as f:
-                print('epoch', epoch, file=f)
+                print('Fold {}'.format(fold + 1), 'epoch', epoch, file=f)
                 print(epoch_time, file=f)
 
 
@@ -136,3 +137,4 @@ def learning():
 
 if __name__ == "__main__":
     learning()
+    graph.plot_loss_acc(train_loss_value, train_acc_value)

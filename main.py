@@ -1,5 +1,7 @@
 import os
 import matplotlib.pyplot as plt
+import datetime
+import cv2
 
 
 import torch
@@ -56,14 +58,6 @@ def main():
 
 
 
-    #with open(path, 'a') as f:
-        #print('epoch', epoch, file=f)
-
-
-    sum_loss = 0.0          #lossの合計
-    sum_correct = 0         #正解率の合計
-    sum_total = 0           #dataの数の合計
-
 
 
 
@@ -99,21 +93,22 @@ def main():
 
 
     with open(path, 'a') as f:
-
+        dt_now = datetime.datetime.now()
+        epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
+        print(epoch_time, file=f)
         print("test  mean loss={}, accuracy={}".format(
             sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset), float(sum_correct/sum_total)), file=f)
         test_loss_value.append(sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset))
         test_acc_value.append(float(sum_correct/sum_total))
 
+
+
+
     images, batches = next(iter(test_dataloader))
-    #print(images.size())
-    #print(batches.size())
-
-
 
 
     img = images[0]
-    plt.imsave('motoImage.png', img[0])
+    plt.imsave("/home/megu/ECoG_CNNs/Result/" + TEST_EXPT_NUMBER + '/original_image.png', img[0])
 
     img = img.unsqueeze(0)
     batch = batches[0]
@@ -128,7 +123,7 @@ def main():
     '''
     smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
     smooth_cam, _ = smooth_grad(img)
-    cv2.imwrite("/home/megu/ECoG_CNNs/Result/move_test/smoothGrad_testimage.png", show_as_gray_image(smooth_cam))
+    cv2.imwrite("/home/megu/ECoG_CNNs/Result/" + TEST_EXPT_NUMBER + "/smoothGrad.png", show_as_gray_image(smooth_cam))
 
     '''
     # 可視化して確認する
@@ -139,11 +134,18 @@ def main():
     plt.show()
     '''
 
+def syn_image():
 
 
+    src1 = cv2.imread('/home/megu/ECoG_CNNs/Result'+ TEST_EXPT_NUMBER + '/original_image.png')
+    src2 = cv2.imread('/home/megu/ECoG_CNNs/Result' + TEST_EXPT_NUMBER + '/smoothGrad.png')
 
+    dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
+
+    cv2.imwrite('/home/megu/ECoG_CNNs/Result/'+ TEST_EXPT_NUMBER + '/opencv_add_weighted.png', dst)
 
     return
 
 if __name__ == "__main__":
     main()
+    syn_image()
