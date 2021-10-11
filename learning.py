@@ -8,7 +8,7 @@ import torch.utils.data
 import torch.nn as nn
 from sklearn.model_selection import KFold
 from torch.utils.data.sampler import SubsetRandomSampler
-from CNN_ECoG_EyesClosed_VS_Anesthesia import plot_loss_acc
+
 
 import model
 import dataset
@@ -75,11 +75,14 @@ def learning():
         )
 
 
+
+
+
     #loop of epoch
         for epoch in range(1, EPOCH+1):
             dt_now = datetime.datetime.now()
             epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
-            path = result_dir_path + "/" + TRAIN_EXPT_NUMBER + '.log'
+            path = result_dir_path + "/" + EXPT_NUMBER + '.log'
             with open(path, 'a') as f:
                 print('Fold {}'.format(fold + 1), 'epoch', epoch, file=f)
                 print(epoch_time, file=f)
@@ -129,8 +132,6 @@ def learning():
 
     model_path = 'model.pth'
     torch.save(net.state_dict(), model_path)
-
-
 
 
 

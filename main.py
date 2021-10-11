@@ -20,9 +20,8 @@ from parameters import *
 classes = ('Anesthetized', 'EyesClosed')
 
 # 結果を保存するpathを生成
-dirname = os.path.dirname(os.path.abspath(__file__))
-result_dir_path = dirname + '/Result/' + TEST_EXPT_NUMBER
-path = result_dir_path + "/" + TEST_EXPT_NUMBER + '.log'
+
+
 
 
 
@@ -91,10 +90,11 @@ def main():
         sum_total += labels.size(0)
         sum_correct += (predicted == labels).sum().item()
 
-
+    path = result_dir_path + '.log'
     with open(path, 'a') as f:
         dt_now = datetime.datetime.now()
         epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
+        print('test')
         print(epoch_time, file=f)
         print("test  mean loss={}, accuracy={}".format(
             sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset), float(sum_correct/sum_total)), file=f)
@@ -108,7 +108,7 @@ def main():
 
 
     img = images[0]
-    plt.imsave("/home/megu/ECoG_CNNs/Result/" + TEST_EXPT_NUMBER + '/original_image.png', img[0])
+    plt.imsave(result_dir_path + '/original_image.png', img[0])
 
     img = img.unsqueeze(0)
     batch = batches[0]
@@ -123,7 +123,7 @@ def main():
     '''
     smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
     smooth_cam, _ = smooth_grad(img)
-    cv2.imwrite("/home/megu/ECoG_CNNs/Result/" + TEST_EXPT_NUMBER + "/smoothGrad.png", show_as_gray_image(smooth_cam))
+    cv2.imwrite(result_dir_path+ "/smoothGrad.png", show_as_gray_image(smooth_cam))
 
     '''
     # 可視化して確認する
@@ -137,12 +137,12 @@ def main():
 def syn_image():
 
 
-    src1 = cv2.imread('/home/megu/ECoG_CNNs/Result'+ TEST_EXPT_NUMBER + '/original_image.png')
-    src2 = cv2.imread('/home/megu/ECoG_CNNs/Result' + TEST_EXPT_NUMBER + '/smoothGrad.png')
+    src1 = cv2.imread(result_dir_path + '/original_image.png')
+    src2 = cv2.imread(result_dir_path + '/smoothGrad.png')
 
     dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
 
-    cv2.imwrite('/home/megu/ECoG_CNNs/Result/'+ TEST_EXPT_NUMBER + '/opencv_add_weighted.png', dst)
+    cv2.imwrite(result_dir_path + '/opencv_add_weighted.png', dst)
 
     return
 
