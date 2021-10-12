@@ -1,5 +1,6 @@
-import os
+import datetime
 import matplotlib.pyplot as plt
+import cv2
 
 
 import torch
@@ -17,10 +18,6 @@ from parameters import *
 
 classes = ('Anesthetized', 'EyesClosed')
 
-# 結果を保存するpathを生成
-dirname = os.path.dirname(os.path.abspath(__file__))
-result_dir_path = dirname + '/Result/' + TEST_EXPT_NUMBER
-path = result_dir_path + "/" + TEST_EXPT_NUMBER + '.log'
 
 
 
@@ -56,14 +53,6 @@ def main():
 
 
 
-    #with open(path, 'a') as f:
-        #print('epoch', epoch, file=f)
-
-
-    sum_loss = 0.0          #lossの合計
-    sum_correct = 0         #正解率の合計
-    sum_total = 0           #dataの数の合計
-
 
 
 
@@ -88,7 +77,6 @@ def main():
 
 
         inputs, labels = inputs.to(device), labels.to(device)
-        #labels = labels.view(-1, 1)
         optimizer.zero_grad()
         outputs = net(inputs)
         loss = criterion(outputs, labels)
@@ -98,8 +86,13 @@ def main():
         sum_correct += (predicted == labels).sum().item()
 
 
-    with open(path, 'a') as f:
+    path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+    dt_now = datetime.datetime.now()
+    epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
 
+    with open(path, 'a') as f:
+        print('test')
+        print(epoch_time, file=f)
         print("test  mean loss={}, accuracy={}".format(
             sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset), float(sum_correct/sum_total)), file=f)
         test_loss_value.append(sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset))
@@ -113,7 +106,7 @@ def main():
 
 
     img = images[0]
-    plt.imsave('motoImage.png', img[0])
+    plt.imsave(RESULT_DIR_PATH + '/original_image.png', img[0])
 
     img = img.unsqueeze(0)
     batch = batches[0]
@@ -128,7 +121,7 @@ def main():
     '''
     smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
     smooth_cam, _ = smooth_grad(img)
-    cv2.imwrite("/home/megu/ECoG_CNNs/Result/move_test/smoothGrad_testimage.png", show_as_gray_image(smooth_cam))
+    cv2.imwrite(RESULT_DIR_PATH + "/smoothGrad.png", show_as_gray_image(smooth_cam))
 
     '''
     # 可視化して確認する
@@ -139,7 +132,15 @@ def main():
     plt.show()
     '''
 
+def syn_image():
+   
 
+    src1 = cv2.imread(RESULT_DIR_PATH + '/original_image.png')
+    src2 = cv2.imread(RESULT_DIR_PATH + "/smoothGrad.png")
+
+    dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
+
+    cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
 
 
 
@@ -147,3 +148,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    syn_image()
