@@ -15,10 +15,6 @@ from parameters import *
 
 
 
-# 結果を保存するpathを生成
-dirname = os.path.dirname(os.path.abspath(__file__))
-result_dir_path = dirname + '/Result/' + TRAIN_EXPT_NUMBER
-
 
 
 device = torch.device(DEVICE)
@@ -38,7 +34,7 @@ train_acc_value=[]       #trainingのaccuracyを保持するlist
 
 def learning():
     # make result dir
-    os.makedirs(result_dir_path, exist_ok=True)
+    os.makedirs(RESULT_DIR_PATH, exist_ok=True)
 
     #load Dataset
     trainval_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
@@ -56,7 +52,7 @@ def learning():
     ## cross val
     splits = KFold(n_splits=5, shuffle=True, random_state=26)   # random_stateの値は要検討
     for fold, (train_idx, val_idx) in enumerate(splits.split(trainval_dataset)):
-        print('Fold {}'.format(fold + 1))
+        
 
         train_sampler = SubsetRandomSampler(train_idx)
         val_sampler = SubsetRandomSampler(val_idx)
@@ -78,9 +74,9 @@ def learning():
         for epoch in range(1, EPOCH+1):
             dt_now = datetime.datetime.now()
             epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
-            path = result_dir_path + "/" + TRAIN_EXPT_NUMBER + '.log'
+            path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
             with open(path, 'a') as f:
-                print('epoch', epoch, file=f)
+                print('Fold {}'.format(fold + 1), 'epoch', epoch, file=f)
                 print(epoch_time, file=f)
 
 
