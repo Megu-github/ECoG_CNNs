@@ -1,6 +1,5 @@
-import os
-import matplotlib.pyplot as plt
 import datetime
+import matplotlib.pyplot as plt
 import cv2
 
 
@@ -18,9 +17,6 @@ from parameters import *
 
 
 classes = ('Anesthetized', 'EyesClosed')
-
-# 結果を保存するpathを生成
-
 
 
 
@@ -81,7 +77,6 @@ def main():
 
 
         inputs, labels = inputs.to(device), labels.to(device)
-        #labels = labels.view(-1, 1)
         optimizer.zero_grad()
         outputs = net(inputs)
         loss = criterion(outputs, labels)
@@ -90,10 +85,12 @@ def main():
         sum_total += labels.size(0)
         sum_correct += (predicted == labels).sum().item()
 
-    path = result_dir_path + '.log'
+
+    path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+    dt_now = datetime.datetime.now()
+    epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
+
     with open(path, 'a') as f:
-        dt_now = datetime.datetime.now()
-        epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
         print('test')
         print(epoch_time, file=f)
         print("test  mean loss={}, accuracy={}".format(
@@ -108,7 +105,7 @@ def main():
 
 
     img = images[0]
-    plt.imsave(result_dir_path + '/original_image.png', img[0])
+    plt.imsave(RESULT_DIR_PATH + '/original_image.png', img[0])
 
     img = img.unsqueeze(0)
     batch = batches[0]
@@ -123,7 +120,7 @@ def main():
     '''
     smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
     smooth_cam, _ = smooth_grad(img)
-    cv2.imwrite(result_dir_path+ "/smoothGrad.png", show_as_gray_image(smooth_cam))
+    cv2.imwrite(RESULT_DIR_PATH + "/smoothGrad.png", show_as_gray_image(smooth_cam))
 
     '''
     # 可視化して確認する
@@ -135,14 +132,18 @@ def main():
     '''
 
 def syn_image():
+   
 
-
-    src1 = cv2.imread(result_dir_path + '/original_image.png')
-    src2 = cv2.imread(result_dir_path + '/smoothGrad.png')
+    src1 = cv2.imread(RESULT_DIR_PATH + '/original_image.png')
+    src2 = cv2.imread(RESULT_DIR_PATH + "/smoothGrad.png")
 
     dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
 
-    cv2.imwrite(result_dir_path + '/opencv_add_weighted.png', dst)
+    cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
+
+    dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
+
+    cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
 
     return
 

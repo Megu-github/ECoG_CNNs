@@ -4,11 +4,12 @@ LEARNING_RATE = 0.0001
 RESIZE = [224, 224]
 DEVICE = "cuda" # サーバー上なら"cuda"
 EXPT_NUMBER = 'MK18_expt.0_5'
-result_dir_path = '/home/megu/ECoG_CNNs/Result/' + EXPT_NUMBER
+RESULT_DIR_PATH = '/home/megu/ECoG_CNNs/Result/' + EXPT_NUMBER
 
-TEST_DATASET_PATH = '/home/megu/CNN_Dataset/MK11_expt.1' # セーバーにDATASETをコピーして、そのpathを書く
-TEST_BATCH_SIZE = 64
 
-TRAIN_DATASET_PATH = '/home/megu/CNN_Dataset/MK11_expt.1' # セーバーにDATASETをコピーして、そのpathを書く
-TRAIN_BATCH_SIZE = 64
-EPOCH = 10
+TEST_DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
+TEST_BATCH_SIZE = 32
+
+TRAIN_DATASET_PATH = '/home/megu/CNN_Dataset/MK1_expt.3' # セーバーにDATASETをコピーして、そのpathを書く
+TRAIN_BATCH_SIZE = 16
+EPOCH = 1
