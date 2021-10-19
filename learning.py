@@ -9,11 +9,12 @@ import torch.nn as nn
 from sklearn.model_selection import KFold
 from torch.utils.data.sampler import SubsetRandomSampler
 
+
 import model
 import dataset
+import graph
 from parameters import *
 import main
-
 
 
 
@@ -69,6 +70,9 @@ def learning():
             trainval_dataset, batch_size=TRAIN_BATCH_SIZE,
             sampler=val_sampler, num_workers=0, drop_last=True
         )
+
+
+
 
 
     #loop of epoch
@@ -129,9 +133,8 @@ def learning():
 
 
 
-
-
 if __name__ == "__main__":
     learning()
+    graph.plot_loss_acc(train_loss_value, train_acc_value)
     main.main()
     main.syn_image()

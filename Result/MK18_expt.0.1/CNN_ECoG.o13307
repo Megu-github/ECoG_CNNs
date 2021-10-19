@@ -1,0 +1,21 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-1ce72701-f930-8001-09eb-a082cba45729
+Traceback (most recent call last):
+  File "learning.py", line 140, in <module>
+    graph.plot_loss_acc(train_loss_value, train_acc_value)
+  File "/new_nas/megu/ECoG_CNNs/graph.py", line 23, in plot_loss_acc
+    plt.plot(range(EPOCH), train_loss_value)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/pyplot.py", line 2842, in plot
+    **({"data": data} if data is not None else {}), **kwargs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/axes/_axes.py", line 1743, in plot
+    lines = [*self._get_lines(*args, data=data, **kwargs)]
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 273, in __call__
+    yield from self._plot_args(this, kwargs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 399, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (1,) and (5,)
+start time:  1633939759
+end time:  1633940566
+run time:  807
