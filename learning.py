@@ -12,6 +12,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 import model
 import dataset
 from parameters import *
+import main
 
 
 
@@ -52,7 +53,7 @@ def learning():
     ## cross val
     splits = KFold(n_splits=5, shuffle=True, random_state=26)   # random_stateの値は要検討
     for fold, (train_idx, val_idx) in enumerate(splits.split(trainval_dataset)):
-        
+
 
         train_sampler = SubsetRandomSampler(train_idx)
         val_sampler = SubsetRandomSampler(val_idx)
@@ -132,3 +133,5 @@ def learning():
 
 if __name__ == "__main__":
     learning()
+    main.main()
+    main.syn_image()
