@@ -1,0 +1,11 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+Traceback (most recent call last):
+  File "learning.py", line 137, in <module>
+    graph.plot_loss_acc()
+TypeError: plot_loss_acc() missing 2 required positional arguments: 'train_loss_value' and 'train_acc_value'
+start time:  1634632834
+end time:  1634638370
+run time:  5536
