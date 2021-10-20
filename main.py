@@ -97,11 +97,10 @@ def main():
         test_loss_value.append(sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset))
         test_acc_value.append(float(sum_correct/sum_total))
 
+
+
+
     images, batches = next(iter(test_dataloader))
-    #print(images.size())
-    #print(batches.size())
-
-
 
 
     img = images[0]
@@ -141,7 +140,9 @@ def syn_image():
 
     cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
 
+    dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
 
+    cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
 
     return
 

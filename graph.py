@@ -5,12 +5,14 @@ from parameters import *
 
 
 
+
+'''
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
 result_dir_path = dirname + '/Result/' + EXPT_NUMBER
-
+'''
 #グラフ描写の関数
-def plot_loss_acc(train_loss_value, train_acc_value):
+def plot_loss_acc(train_loss_value, train_acc_value):   # , train_acc_value, test_acc_value
     plt.figure(figsize=(6,6))      #グラフ描画用
 
     epoch_plot = EPOCH * 5

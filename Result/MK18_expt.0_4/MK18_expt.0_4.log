@@ -3,6 +3,8 @@ Fold 1 epoch 1
 val mean loss=0.13675548078591931, accuracy=0.5109375
 Fold 1 epoch 2
 2021-10-11 20:07:49
+<<<<<<< HEAD
+=======
 val mean loss=0.13652795332449455, accuracy=0.5125
 Fold 1 epoch 3
 2021-10-11 20:10:22
@@ -148,3 +150,4 @@ val mean loss=0.0024826570143808187, accuracy=0.9973958333333334
 Fold 5 epoch 10
 2021-10-11 22:10:43
 val mean loss=0.0016957750314953947, accuracy=0.9973958333333334
+>>>>>>> 7d9dd90ae3a2f7122eaa1cc973b1f96f73867f1c
