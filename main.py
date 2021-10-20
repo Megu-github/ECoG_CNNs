@@ -91,8 +91,7 @@ def main():
     epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
 
     with open(path, 'a') as f:
-        print('test')
-        print(epoch_time, file=f)
+        print('test', epoch_time, file=f)
         print("test  mean loss={}, accuracy={}".format(
             sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset), float(sum_correct/sum_total)), file=f)
         test_loss_value.append(sum_loss*TEST_BATCH_SIZE/len(test_dataloader.dataset))

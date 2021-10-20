@@ -13,6 +13,7 @@ import model
 import dataset
 from parameters import *
 import main
+import graph
 
 
 
@@ -133,5 +134,6 @@ def learning():
 
 if __name__ == "__main__":
     learning()
+    graph.plot_loss_acc()
     main.main()
     main.syn_image()
