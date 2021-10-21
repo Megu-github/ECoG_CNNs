@@ -137,5 +137,3 @@ def learning():
 if __name__ == "__main__":
     learning()
     graph.plot_loss_acc(train_loss_value, train_acc_value)
-    #main.main()
-    #main.syn_image()
