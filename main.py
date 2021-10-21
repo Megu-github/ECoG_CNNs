@@ -133,16 +133,12 @@ def main():
 def syn_image():
 
 
-    src1 = cv2.imread(RESULT_DIR_PATH + '/original_image.png')
-    src2 = cv2.imread(RESULT_DIR_PATH + "/smoothGrad.png")
+    src1 = cv2.imread(RESULT_DIR_PATH + "/" + EXPT_NUMBER + '_original_image.png')
+    src2 = cv2.imread(RESULT_DIR_PATH + "/" + EXPT_NUMBER + "_smoothGrad.png")
 
     dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
 
-    cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
-
-    dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
-
-    cv2.imwrite(RESULT_DIR_PATH + '/opencv_add_weighted.png', dst)
+    cv2.imwrite(RESULT_DIR_PATH + "/" + EXPT_NUMBER + '_syn_image.png', dst)
 
     return
 
