@@ -131,7 +131,7 @@ def main():
     '''
 
 def syn_image():
-   
+
 
     src1 = cv2.imread(RESULT_DIR_PATH + '/original_image.png')
     src2 = cv2.imread(RESULT_DIR_PATH + "/smoothGrad.png")
