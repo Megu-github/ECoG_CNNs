@@ -138,7 +138,7 @@ def syn_image():
 
     dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
 
-    cv2.imwrite(RESULT_DIR_PATH + "/" + EXPT_NUMBER + '_syn_image.png', dst)
+    cv2.imwrite(RESULT_DIR_PATH + "/" + EXPT_NUMBER + "_syn_image.png", dst)
 
     return
 
