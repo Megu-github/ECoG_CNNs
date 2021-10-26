@@ -39,7 +39,7 @@ def main():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=LEARNING_RATE, momentum=0.9, weight_decay=WEIGHT_DECAY)
 
-    model_path = 'model.pth'
+    model_path = RESULT_DIR_PATH + '/model.pth'
     net.load_state_dict(torch.load(model_path))
 
 
