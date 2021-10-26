@@ -104,7 +104,7 @@ def main():
 
 
     img = images[0]
-    plt.imsave(RESULT_DIR_PATH + '/original_image.png', img[0])
+    plt.imsave(RESULT_DIR_PATH +  "/" + EXPT_NUMBER +'_original_image.png', img[0])
 
     img = img.unsqueeze(0)
     batch = batches[0]
@@ -119,7 +119,7 @@ def main():
     '''
     smooth_grad = SmoothGrad(net, use_cuda=True, stdev_spread=0.2, n_samples=20)
     smooth_cam, _ = smooth_grad(img)
-    cv2.imwrite(RESULT_DIR_PATH + "/smoothGrad.png", show_as_gray_image(smooth_cam))
+    cv2.imwrite(RESULT_DIR_PATH +"/" + EXPT_NUMBER + "_smoothGrad.png", show_as_gray_image(smooth_cam))
 
     '''
     # 可視化して確認する
@@ -138,7 +138,7 @@ def syn_image():
 
     dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
 
-    cv2.imwrite(RESULT_DIR_PATH + "/" + EXPT_NUMBER + "_syn_image.png", dst)
+    cv2.imwrite(RESULT_DIR_PATH + "/" + EXPT_NUMBER + '_syn_image.png', dst)
 
     return
 
