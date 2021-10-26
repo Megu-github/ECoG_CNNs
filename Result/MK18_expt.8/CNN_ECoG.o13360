@@ -1,0 +1,15 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-1ce72701-f930-8001-09eb-a082cba45729
+  0%|          | 0/20 [00:00<?, ?it/s]100%|██████████| 20/20 [00:00<00:00, 618.23it/s]
+Traceback (most recent call last):
+  File "main.py", line 147, in <module>
+    syn_image()
+  File "main.py", line 141, in syn_image
+    cv2.imwrite(RESULT_DIR_PATH + "/" + EXPT_NUMBER + "_syn_image.png", dst)
+cv2.error: OpenCV(4.5.3) /tmp/pip-req-build-l1r0y34w/opencv/modules/imgcodecs/src/loadsave.cpp:803: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'
+
+start time:  1635142768
+end time:  1635156261
+run time:  13493
