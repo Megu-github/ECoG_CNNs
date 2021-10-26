@@ -128,7 +128,7 @@ def learning():
                 train_acc_value.append(float(sum_correct/sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
 
-    model_path = 'model.pth'
+    model_path = RESULT_DIR_PATH + '/model.pth' 
     torch.save(net.state_dict(), model_path)
 
 
