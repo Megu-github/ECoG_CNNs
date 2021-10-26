@@ -1,0 +1,8 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-7bbdfddb-899d-ec05-00f1-27e63c9f71b9
+  0%|          | 0/20 [00:00<?, ?it/s]100%|██████████| 20/20 [00:00<00:00, 421.50it/s]
+start time:  1635258220
+end time:  1635273682
+run time:  15462
