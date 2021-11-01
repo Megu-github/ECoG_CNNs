@@ -22,7 +22,7 @@ def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_val
     plt.plot(range(epoch_plot) , train_loss_value)
     plt.plot(range(epoch_plot), val_loss_value, c='#00ff00')
     plt.xlim(0, epoch_plot)
-    plt.ylim(0, 1.5)
+    plt.ylim(0, 1.0)
     plt.xlabel('EPOCH')
     plt.ylabel('LOSS')
     plt.legend(['train loss', 'val loss'])
