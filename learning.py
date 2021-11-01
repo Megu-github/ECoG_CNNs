@@ -110,7 +110,7 @@ def learning():
 
             with open(path, 'a') as f:
 
-                print("test mean loss={}, accuracy={}".format(
+                print("train mean loss={}, accuracy={}".format(
                     train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(train_sum_correct/train_sum_total)), file=f)  #lossとaccuracy出力
                 train_loss_value.append(train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
                 train_acc_value.append(float(train_sum_correct/train_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
@@ -157,4 +157,4 @@ def learning():
 
 if __name__ == "__main__":
     learning()
-    graph.plot_loss_acc(val_loss_value, val_acc_value)
+    graph.plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_value)
