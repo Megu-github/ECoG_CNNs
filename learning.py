@@ -26,9 +26,11 @@ net = net.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=LEARNING_RATE, momentum=0.9, weight_decay=WEIGHT_DECAY)
 
+
 train_loss_value=[]      #trainingのlossを保持するlist
 train_acc_value=[]       #trainingのaccuracyを保持するlist
-
+val_loss_value=[]      #valのlossを保持するlist
+val_acc_value=[]       #valのaccuracyを保持するlist
 
 
 
@@ -87,6 +89,11 @@ def learning():
 
 
             # training
+
+            train_sum_loss = 0.0          #lossの合計
+            train_sum_correct = 0         #正解率の合計
+            train_sum_total = 0           #dataの数の合計
+
             for (inputs, labels) in train_dataloader:
 
                 inputs, labels = inputs.to(device), labels.to(device)
@@ -95,11 +102,25 @@ def learning():
                 loss = criterion(outputs, labels)
                 loss.backward()
                 optimizer.step()
+                train_sum_loss += loss.item()
+                _, predicted = outputs.max(1)
+                train_sum_total += labels.size(0)
+                train_sum_correct += (predicted == labels).sum().item()
 
 
-            sum_loss = 0.0          #lossの合計
-            sum_correct = 0         #正解率の合計
-            sum_total = 0           #dataの数の合計
+            with open(path, 'a') as f:
+
+                print("train mean loss={}, accuracy={}".format(
+                    train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(train_sum_correct/train_sum_total)), file=f)  #lossとaccuracy出力
+                train_loss_value.append(train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
+                train_acc_value.append(float(train_sum_correct/train_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
+
+
+
+
+            val_sum_loss = 0.0          #lossの合計
+            val_sum_correct = 0         #正解率の合計
+            val_sum_total = 0           #dataの数の合計
 
 
 
@@ -110,10 +131,10 @@ def learning():
                 optimizer.zero_grad()
                 outputs = net(inputs)
                 loss = criterion(outputs, labels)
-                sum_loss += loss.item()                            #lossを足していく
+                val_sum_loss += loss.item()                            #lossを足していく
                 _, predicted = outputs.max(1)                      #出力の最大値の添字(予想位置)を取得
-                sum_total += labels.size(0)                        #labelの数を足していくことでデータの総和を取る
-                sum_correct += (predicted == labels).sum().item()  #予想位置と実際の正解を比べ,正解している数だけ足す
+                val_sum_total += labels.size(0)                        #labelの数を足していくことでデータの総和を取る
+                val_sum_correct += (predicted == labels).sum().item()  #予想位置と実際の正解を比べ,正解している数だけ足す
 
 
 
@@ -123,12 +144,12 @@ def learning():
             with open(path, 'a') as f:
 
                 print("val mean loss={}, accuracy={}".format(
-                    sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(sum_correct/sum_total)), file=f)  #lossとaccuracy出力
-                train_loss_value.append(sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
-                train_acc_value.append(float(sum_correct/sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
+                    val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset), float(val_sum_correct/val_sum_total)), file=f)  #lossとaccuracy出力
+                val_loss_value.append(val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
+                val_acc_value.append(float(val_sum_correct/val_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
 
-    model_path = RESULT_DIR_PATH + '/model.pth' 
+    model_path = RESULT_DIR_PATH + '/model.pth'
     torch.save(net.state_dict(), model_path)
 
 
@@ -136,4 +157,4 @@ def learning():
 
 if __name__ == "__main__":
     learning()
-    graph.plot_loss_acc(train_loss_value, train_acc_value)
+    graph.plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_value)
