@@ -14,7 +14,6 @@ import model
 import dataset
 import graph
 from parameters import *
-import main
 import graph
 
 
@@ -66,12 +65,12 @@ def learning():
         #load Dataloader
         train_dataloader = torch.utils.data.DataLoader(
             trainval_dataset, batch_size=TRAIN_BATCH_SIZE,
-            sampler=train_sampler, num_workers=0, drop_last=True
+            sampler=train_sampler, num_workers=2, drop_last=True
         )
 
         val_dataloader = torch.utils.data.DataLoader(
             trainval_dataset, batch_size=TRAIN_BATCH_SIZE,
-            sampler=val_sampler, num_workers=0, drop_last=True
+            sampler=val_sampler, num_workers=2, drop_last=True
         )
 
 
@@ -111,7 +110,7 @@ def learning():
             with open(path, 'a') as f:
 
                 print("train mean loss={}, accuracy={}".format(
-                    train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(train_sum_correct/train_sum_total)), file=f)  #lossとaccuracy出力
+                    train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(train_sum_correct/train_sum_total)), file=f)  #lossとaccuracy出力 ここのグラフの出力を確認する！！！
                 train_loss_value.append(train_sum_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
                 train_acc_value.append(float(train_sum_correct/train_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
@@ -145,7 +144,7 @@ def learning():
 
                 print("val mean loss={}, accuracy={}".format(
                     val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset), float(val_sum_correct/val_sum_total)), file=f)  #lossとaccuracy出力
-                val_loss_value.append(val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
+                val_loss_value.append(val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持 open内に書かなくてよい
                 val_acc_value.append(float(val_sum_correct/val_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
 
