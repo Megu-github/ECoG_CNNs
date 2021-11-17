@@ -28,7 +28,7 @@ def main():
 
     test_dataloader = data.DataLoader(
         test_dataset, batch_size=TEST_BATCH_SIZE, shuffle=False,
-        num_workers=0, drop_last=True
+        num_workers=2, drop_last=True
     )
 
 
