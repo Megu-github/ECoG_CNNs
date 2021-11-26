@@ -12,7 +12,7 @@ echo "cuda visible devices: " $CUDA_VISIBLE_DEVICES
 start_time=`date +%s`
 
 cd $PBS_O_WORKDIR
-python learning.py
+python main.py
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
