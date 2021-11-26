@@ -1,0 +1,182 @@
+Fold 1 epoch 0
+2021-11-26 16:55:15
+Epoch [1/5], loss: 0.75716 acc: 0.50000 val_loss: 0.74998, val_acc: 0.25000
+Fold 1 epoch 1
+2021-11-26 16:55:15
+Epoch [2/5], loss: 0.67266 acc: 0.62500 val_loss: 0.76363, val_acc: 0.25000
+Fold 1 epoch 2
+2021-11-26 16:55:16
+Epoch [3/5], loss: 0.57442 acc: 0.68750 val_loss: 0.78503, val_acc: 0.25000
+Fold 1 epoch 3
+2021-11-26 16:55:16
+Epoch [4/5], loss: 0.56592 acc: 0.68750 val_loss: 0.59460, val_acc: 0.75000
+Fold 1 epoch 4
+2021-11-26 16:55:16
+Epoch [5/5], loss: 0.38814 acc: 0.93750 val_loss: 0.97111, val_acc: 0.25000
+Fold 1 epoch 0
+2021-11-26 16:56:04
+Epoch [1/5], loss: 0.81488 acc: 0.43750 val_loss: 1.23363, val_acc: 0.25000
+Fold 1 epoch 1
+2021-11-26 16:56:05
+Epoch [2/5], loss: 0.68795 acc: 0.56250 val_loss: 0.72836, val_acc: 0.25000
+Fold 1 epoch 2
+2021-11-26 16:56:05
+Epoch [3/5], loss: 0.67962 acc: 0.56250 val_loss: 0.60162, val_acc: 0.75000
+Fold 1 epoch 3
+2021-11-26 16:56:06
+Epoch [4/5], loss: 0.55590 acc: 0.93750 val_loss: 0.72545, val_acc: 0.50000
+Fold 1 epoch 4
+2021-11-26 16:56:06
+Epoch [5/5], loss: 0.55044 acc: 0.56250 val_loss: 0.75960, val_acc: 0.25000
+Fold 1 epoch 0
+2021-11-26 16:56:58
+Epoch [1/5], loss: 0.86221 acc: 0.62500 val_loss: 0.52575, val_acc: 0.75000
+Fold 1 epoch 1
+2021-11-26 16:56:58
+Epoch [2/5], loss: 0.72206 acc: 0.43750 val_loss: 0.66355, val_acc: 0.50000
+Fold 1 epoch 2
+2021-11-26 16:56:59
+Epoch [3/5], loss: 0.77487 acc: 0.62500 val_loss: 0.82584, val_acc: 0.25000
+Fold 1 epoch 3
+2021-11-26 16:56:59
+Epoch [4/5], loss: 0.69527 acc: 0.37500 val_loss: 0.62926, val_acc: 0.75000
+Fold 1 epoch 4
+2021-11-26 16:56:59
+Epoch [5/5], loss: 0.67640 acc: 0.43750 val_loss: 0.65677, val_acc: 0.75000
+Fold 2 epoch 0
+2021-11-26 16:57:00
+Epoch [1/5], loss: 0.83692 acc: 0.31250 val_loss: 0.67686, val_acc: 0.50000
+Fold 2 epoch 1
+2021-11-26 16:57:01
+Epoch [2/5], loss: 0.65924 acc: 0.68750 val_loss: 0.65069, val_acc: 0.50000
+Fold 2 epoch 2
+2021-11-26 16:57:01
+Epoch [3/5], loss: 0.62376 acc: 0.75000 val_loss: 0.63374, val_acc: 1.00000
+Fold 2 epoch 3
+2021-11-26 16:57:01
+Epoch [4/5], loss: 0.58470 acc: 0.87500 val_loss: 0.61100, val_acc: 0.75000
+Fold 2 epoch 4
+2021-11-26 16:57:02
+Epoch [5/5], loss: 0.58465 acc: 0.81250 val_loss: 0.56493, val_acc: 1.00000
+Fold 3 epoch 0
+2021-11-26 16:57:03
+Epoch [1/5], loss: 0.80277 acc: 0.62500 val_loss: 0.57088, val_acc: 0.75000
+Fold 3 epoch 1
+2021-11-26 16:57:03
+Epoch [2/5], loss: 0.72750 acc: 0.56250 val_loss: 0.70524, val_acc: 0.25000
+Fold 3 epoch 2
+2021-11-26 16:57:03
+Epoch [3/5], loss: 0.61313 acc: 0.68750 val_loss: 0.65886, val_acc: 0.50000
+Fold 3 epoch 3
+2021-11-26 16:57:04
+Epoch [4/5], loss: 0.55495 acc: 0.68750 val_loss: 0.67609, val_acc: 0.25000
+Fold 3 epoch 4
+2021-11-26 16:57:04
+Epoch [5/5], loss: 0.47963 acc: 0.75000 val_loss: 0.51580, val_acc: 1.00000
+Fold 4 epoch 0
+2021-11-26 16:57:05
+Epoch [1/5], loss: 0.77668 acc: 0.37500 val_loss: 0.68584, val_acc: 0.50000
+Fold 4 epoch 1
+2021-11-26 16:57:05
+Epoch [2/5], loss: 0.69332 acc: 0.50000 val_loss: 0.66155, val_acc: 0.75000
+Fold 4 epoch 2
+2021-11-26 16:57:06
+Epoch [3/5], loss: 0.65567 acc: 0.62500 val_loss: 0.64597, val_acc: 0.75000
+Fold 4 epoch 3
+2021-11-26 16:57:06
+Epoch [4/5], loss: 0.60426 acc: 0.81250 val_loss: 0.64688, val_acc: 0.50000
+Fold 4 epoch 4
+2021-11-26 16:57:07
+Epoch [5/5], loss: 0.59846 acc: 0.75000 val_loss: 0.61390, val_acc: 1.00000
+Fold 5 epoch 0
+2021-11-26 16:57:07
+Epoch [1/5], loss: 0.79696 acc: 0.50000 val_loss: 0.74024, val_acc: 0.50000
+Fold 5 epoch 1
+2021-11-26 16:57:08
+Epoch [2/5], loss: 0.75327 acc: 0.43750 val_loss: 0.70890, val_acc: 0.50000
+Fold 5 epoch 2
+2021-11-26 16:57:08
+Epoch [3/5], loss: 0.69071 acc: 0.43750 val_loss: 0.71763, val_acc: 0.50000
+Fold 5 epoch 3
+2021-11-26 16:57:09
+Epoch [4/5], loss: 0.65042 acc: 0.68750 val_loss: 0.69198, val_acc: 0.75000
+Fold 5 epoch 4
+2021-11-26 16:57:09
+Epoch [5/5], loss: 0.61950 acc: 0.93750 val_loss: 0.70421, val_acc: 0.50000
+oof loss: 0.611123
+Fold 1 epoch 0
+2021-11-26 18:21:08
+Epoch [1/5], loss: 0.74552 acc: 0.56250 val_loss: 0.61814, val_acc: 0.75000
+Fold 1 epoch 1
+2021-11-26 18:21:09
+Epoch [2/5], loss: 0.66412 acc: 0.56250 val_loss: 1.12152, val_acc: 0.25000
+Fold 1 epoch 2
+2021-11-26 18:21:09
+Epoch [3/5], loss: 0.64666 acc: 0.56250 val_loss: 0.73413, val_acc: 0.50000
+Fold 1 epoch 3
+2021-11-26 18:21:10
+Epoch [4/5], loss: 0.50367 acc: 0.81250 val_loss: 0.78900, val_acc: 0.50000
+Fold 1 epoch 4
+2021-11-26 18:21:10
+Epoch [5/5], loss: 0.39157 acc: 1.00000 val_loss: 1.03516, val_acc: 0.25000
+Fold 2 epoch 0
+2021-11-26 18:21:11
+Epoch [1/5], loss: 0.80930 acc: 0.31250 val_loss: 0.71921, val_acc: 0.50000
+Fold 2 epoch 1
+2021-11-26 18:21:11
+Epoch [2/5], loss: 0.65793 acc: 0.62500 val_loss: 0.63299, val_acc: 1.00000
+Fold 2 epoch 2
+2021-11-26 18:21:12
+Epoch [3/5], loss: 0.68340 acc: 0.56250 val_loss: 0.60357, val_acc: 0.75000
+Fold 2 epoch 3
+2021-11-26 18:21:12
+Epoch [4/5], loss: 0.56208 acc: 0.87500 val_loss: 0.58598, val_acc: 0.75000
+Fold 2 epoch 4
+2021-11-26 18:21:12
+Epoch [5/5], loss: 0.51620 acc: 0.87500 val_loss: 0.54407, val_acc: 0.75000
+Fold 3 epoch 0
+2021-11-26 18:21:13
+Epoch [1/5], loss: 0.79750 acc: 0.56250 val_loss: 0.81853, val_acc: 0.25000
+Fold 3 epoch 1
+2021-11-26 18:21:13
+Epoch [2/5], loss: 0.69384 acc: 0.56250 val_loss: 0.67867, val_acc: 0.50000
+Fold 3 epoch 2
+2021-11-26 18:21:14
+Epoch [3/5], loss: 0.61134 acc: 0.56250 val_loss: 0.59797, val_acc: 1.00000
+Fold 3 epoch 3
+2021-11-26 18:21:14
+Epoch [4/5], loss: 0.62181 acc: 0.62500 val_loss: 0.51014, val_acc: 1.00000
+Fold 3 epoch 4
+2021-11-26 18:21:15
+Epoch [5/5], loss: 0.51358 acc: 0.75000 val_loss: 0.38390, val_acc: 0.75000
+Fold 4 epoch 0
+2021-11-26 18:21:15
+Epoch [1/5], loss: 0.78392 acc: 0.50000 val_loss: 0.71191, val_acc: 0.50000
+Fold 4 epoch 1
+2021-11-26 18:21:16
+Epoch [2/5], loss: 0.67248 acc: 0.50000 val_loss: 0.63275, val_acc: 0.50000
+Fold 4 epoch 2
+2021-11-26 18:21:16
+Epoch [3/5], loss: 0.75208 acc: 0.43750 val_loss: 0.62335, val_acc: 0.50000
+Fold 4 epoch 3
+2021-11-26 18:21:17
+Epoch [4/5], loss: 0.65840 acc: 0.43750 val_loss: 0.58944, val_acc: 1.00000
+Fold 4 epoch 4
+2021-11-26 18:21:17
+Epoch [5/5], loss: 0.63187 acc: 0.68750 val_loss: 0.57985, val_acc: 0.50000
+Fold 5 epoch 0
+2021-11-26 18:21:18
+Epoch [1/5], loss: 0.70211 acc: 0.62500 val_loss: 0.83489, val_acc: 0.50000
+Fold 5 epoch 1
+2021-11-26 18:21:18
+Epoch [2/5], loss: 0.80966 acc: 0.31250 val_loss: 0.71655, val_acc: 0.50000
+Fold 5 epoch 2
+2021-11-26 18:21:19
+Epoch [3/5], loss: 0.63688 acc: 0.62500 val_loss: 0.73709, val_acc: 0.50000
+Fold 5 epoch 3
+2021-11-26 18:21:19
+Epoch [4/5], loss: 0.58736 acc: 0.75000 val_loss: 0.71939, val_acc: 0.75000
+Fold 5 epoch 4
+2021-11-26 18:21:20
+Epoch [5/5], loss: 0.53069 acc: 0.87500 val_loss: 0.78478, val_acc: 0.50000
+oof loss: 0.665551
