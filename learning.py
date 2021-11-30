@@ -21,10 +21,6 @@ import graph
 
 
 
-
-
-
-
 def learning():
 
     # make result dir
@@ -44,6 +40,10 @@ def learning():
 
     splits = KFold(n_splits=5, shuffle=True, random_state=26)   # random_stateの値は要検討
     for fold, (train_idx, val_idx) in enumerate(splits.split(trainval_dataset)):
+        file_path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+        print("model name: model", fold + 1)
+        with open(file_path, 'a') as f:
+            print("model name: model", fold + 1, file=f)
 
         net = model.CNNs(p_dropout1=0.25, p_dropout2=0.5, use_Barch_Norm=False).to(device)
         optimizer = optim.SGD(net.parameters(),lr=LEARNING_RATE, momentum=0.9, weight_decay=WEIGHT_DECAY)   #Adams検討
@@ -62,7 +62,7 @@ def learning():
         net, loss, acc, history = fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, device, fold)
         nets.append(net)
         losses.append(loss)
-        accs.append(acc)
+        accs.append(float(acc))
 
         #graph.plot_loss_acc(history[:,1], history[:,2], history[:,3], history[:,4], fold)
         graph.evaluate_history(history, fold)
@@ -70,7 +70,7 @@ def learning():
         model_path = RESULT_DIR_PATH  + '/model' + str(fold+1) + '.pth'
         torch.save(net.state_dict(), model_path)
 
-    file_path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+
     with open(file_path, 'a') as f:
         print("oof loss: {:4f}".format(mean(losses)), file=f)
         print("oof acc: {:4f}".format(mean(accs)), file=f)
@@ -89,8 +89,7 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
         train_acc = 0
         val_loss = 0
         val_acc = 0
-        train_sum_correct = 0
-        train_sum_total = 0
+
 
         #訓練フェーズ
         net.train()
@@ -110,15 +109,6 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
             train_acc += (predicted == labels).sum()
             avg_train_loss = train_loss / used_datasize
             avg_train_acc = train_acc / used_datasize
-
-
-
-
-
-        val_sum_loss = 0.0          #lossの合計
-        val_sum_correct = 0         #正解率の合計
-        val_sum_total = 0           #dataの数の合計
-
 
 
         # validation
@@ -152,23 +142,24 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
         epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
         file_path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
 
+
+        '''
         with open(file_path, 'a') as f:
-            '''
-            print("train mean loss={}, accuracy={}".format(
-                train_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(train_sum_correct/train_sum_total)), file=f)  #lossとaccuracy出力 ここのグラフの出力を確認する！！！
-            train_loss_value.append(train_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
-            train_acc_value.append(float(train_sum_correct/train_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
+        print("train mean loss={}, accuracy={}".format(
+            train_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset), float(train_sum_correct/train_sum_total)), file=f)  #lossとaccuracy出力 ここのグラフの出力を確認する！！！
+        train_loss_value.append(train_loss*TRAIN_BATCH_SIZE/len(train_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持
+        train_acc_value.append(float(train_sum_correct/train_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
-            print("val mean loss={}, accuracy={}".format(
-                val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset), float(val_sum_correct/val_sum_total)), file=f)  #lossとaccuracy出力
-            val_loss_value.append(val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持 open内に書かなくてよい
-            val_acc_value.append(float(val_sum_correct/val_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
+        print("val mean loss={}, accuracy={}".format(
+            val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset), float(val_sum_correct/val_sum_total)), file=f)  #lossとaccuracy出力
+        val_loss_value.append(val_sum_loss*TRAIN_BATCH_SIZE/len(val_dataloader.dataset))  #traindataのlossをグラフ描画のためにlistに保持 open内に書かなくてよい
+        val_acc_value.append(float(val_sum_correct/val_sum_total))   #traindataのaccuracyをグラフ描画のためにlistに保持
 
-            '''
+        '''
 
 
         with open(file_path, 'a') as f:
-            print('Fold {}'.format(fold + 1), 'epoch', epoch, file=f)
+           # print('Fold {}'.format(fold + 1), 'epoch', epoch, file=f)
             print(epoch_time, file=f)
 
 
@@ -176,7 +167,7 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
         item = np.array([epoch+1, avg_train_loss, avg_train_acc, avg_val_loss, avg_val_acc])
         history = np.vstack((history, item))
 
-    return net, avg_val_loss, avg_val_acc, history
+    return net, history[-1,3], history[-1,4], history
 
 if __name__ == "__main__":
     learning()
