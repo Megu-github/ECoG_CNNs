@@ -1,5 +1,7 @@
 import os
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 from parameters import *
 
@@ -11,8 +13,10 @@ from parameters import *
 dirname = os.path.dirname(os.path.abspath(__file__))
 result_dir_path = dirname + '/Result/' + EXPT_NUMBER
 '''
+
+'''
 #グラフ描写の関数
-def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_value):   # , train_acc_value, test_acc_value
+def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_value, fold):   # , train_acc_value, test_acc_value
     plt.figure(figsize=(6,6))      #グラフ描画用
 
     epoch_plot = EPOCH * 5
@@ -27,8 +31,8 @@ def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_val
     plt.ylabel('LOSS')
     plt.legend(['train loss', 'val loss'])
     plt.title('loss')
-    plt.savefig(os.path.join(RESULT_DIR_PATH, EXPT_NUMBER + "_loss_image.png"))
-    plt.clf()
+    plt.savefig(os.path.join(RESULT_DIR_PATH, EXPT_NUMBER + "_own_loss_image" + str(fold) + ".png"))
+    plt.close()
 
     plt.plot(range(epoch_plot) , train_acc_value)
     plt.plot(range(epoch_plot), val_acc_value, c='#00ff00')
@@ -38,8 +42,46 @@ def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_val
     plt.ylabel('ACCURACY')
     plt.legend(['train acc', 'val acc'])
     plt.title('accuracy')
-    plt.savefig(os.path.join(RESULT_DIR_PATH, EXPT_NUMBER + "_accuracy_image.png"))
+    plt.savefig(os.path.join(RESULT_DIR_PATH, EXPT_NUMBER + "_own_accuracy_image" + str(fold) + ".png"))
 
     plt.close()
 
     return
+
+'''
+
+# 学習ログ解析
+
+def evaluate_history(history, fold, parameter):
+    #損失と精度の確認
+    file_path = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + '.log'
+    with open(file_path, 'a') as f:
+        print(f'初期状態: 損失: {history[0,3]:.5f} 精度: {history[0,4]:.5f}', file=f)
+        print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}', file=f )
+
+    num_epochs = len(history)
+    unit = num_epochs / 10
+
+    # 学習曲線の表示 (損失)
+    plt.figure(figsize=(9,8))
+    plt.plot(history[:,0], history[:,1], 'b', label='train')
+    plt.plot(history[:,0], history[:,3], 'k', label='val')
+    plt.xticks(np.arange(0,num_epochs+1, unit))
+    plt.xlabel('epoch')
+    plt.ylabel('Loss')
+    plt.title('learning graph(Loss)')
+    plt.legend()
+    plt.savefig(os.path.join(parameter.RESULT_DIR_PATH, parameter.EXPT_NUMBER + "_book_loss_image" + str(fold+1) + ".png"))
+    plt.close()
+
+    # 学習曲線の表示 (精度)
+    plt.figure(figsize=(9,8))
+    plt.plot(history[:,0], history[:,2], 'b', label='train')
+    plt.plot(history[:,0], history[:,4], 'k', label='val')
+    plt.xticks(np.arange(0,num_epochs+1,unit))
+    plt.xlabel('epoch')
+    plt.ylabel('accuracy')
+    plt.title('learning graph(Accuracy)')
+    plt.legend()
+    plt.savefig(os.path.join(parameter.RESULT_DIR_PATH, parameter.EXPT_NUMBER + "_book_accuracy_image" + str(fold+1) + ".png"))
+    plt.close()
