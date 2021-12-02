@@ -13,6 +13,8 @@ from parameters import *
 dirname = os.path.dirname(os.path.abspath(__file__))
 result_dir_path = dirname + '/Result/' + EXPT_NUMBER
 '''
+
+'''
 #グラフ描写の関数
 def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_value, fold):   # , train_acc_value, test_acc_value
     plt.figure(figsize=(6,6))      #グラフ描画用
@@ -46,11 +48,13 @@ def plot_loss_acc(train_loss_value, train_acc_value, val_loss_value, val_acc_val
 
     return
 
+'''
+
 # 学習ログ解析
 
-def evaluate_history(history, fold):
+def evaluate_history(history, fold, parameter):
     #損失と精度の確認
-    file_path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+    file_path = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + '.log'
     with open(file_path, 'a') as f:
         print(f'初期状態: 損失: {history[0,3]:.5f} 精度: {history[0,4]:.5f}', file=f)
         print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}', file=f )
@@ -67,7 +71,7 @@ def evaluate_history(history, fold):
     plt.ylabel('Loss')
     plt.title('learning graph(Loss)')
     plt.legend()
-    plt.savefig(os.path.join(RESULT_DIR_PATH, EXPT_NUMBER + "_book_loss_image" + str(fold+1) + ".png"))
+    plt.savefig(os.path.join(parameter.RESULT_DIR_PATH, parameter.EXPT_NUMBER + "_book_loss_image" + str(fold+1) + ".png"))
     plt.close()
 
     # 学習曲線の表示 (精度)
@@ -79,5 +83,5 @@ def evaluate_history(history, fold):
     plt.ylabel('accuracy')
     plt.title('learning graph(Accuracy)')
     plt.legend()
-    plt.savefig(os.path.join(RESULT_DIR_PATH, EXPT_NUMBER + "_book_accuracy_image" + str(fold+1) + ".png"))
+    plt.savefig(os.path.join(parameter.RESULT_DIR_PATH, parameter.EXPT_NUMBER + "_book_accuracy_image" + str(fold+1) + ".png"))
     plt.close()

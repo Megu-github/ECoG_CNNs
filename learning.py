@@ -7,32 +7,42 @@ import torch.optim as optim
 import torch.utils.data
 import torch.nn as nn
 from sklearn.model_selection import KFold
+from torch.utils.data.dataset import Dataset
 from torch.utils.data.sampler import SubsetRandomSampler
 from statistics import mean
 from tqdm.notebook import tqdm
+import matplotlib.pyplot as plt
 
 
 import model
 import dataset
 import graph
-from parameters import *
+from parameters import Parameters1, Parameters2
 import graph
 
 
-
-
-def learning():
+def learning(parameter):
 
     # make result dir
-    os.makedirs(RESULT_DIR_PATH, exist_ok=True)
+    os.makedirs(parameter.RESULT_DIR_PATH, exist_ok=True)
 
     #load Dataset
-    trainval_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    #trainval_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
 
-    device = torch.device(DEVICE)
+    trainval_dataset = dataset.pytorch_book(parameter.TRAIN_DATASET_PATH)
+    test_dataset = dataset.pytorch_book(parameter.TEST_DATASET_PATH)
+
+    test_dataloader = torch.utils.data.DataLoader(
+        test_dataset, batch_size=parameter.TEST_BATCH_SIZE,
+        num_workers=2, drop_last=True
+    )
+
+
+    device = torch.device(parameter.DEVICE)
 
     criterion = nn.CrossEntropyLoss()
 
+    classes = ['EyesClosed', 'Anesthetized']
 
 
     ## cross val
@@ -40,34 +50,34 @@ def learning():
 
     splits = KFold(n_splits=5, shuffle=True, random_state=26)   # random_stateの値は要検討
     for fold, (train_idx, val_idx) in enumerate(splits.split(trainval_dataset)):
-        file_path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+        file_path = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + '.log'
         print("model name: model", fold + 1)
         with open(file_path, 'a') as f:
             print("model name: model", fold + 1, file=f)
 
         net = model.CNNs(p_dropout1=0.25, p_dropout2=0.5, use_Barch_Norm=False).to(device)
-        optimizer = optim.SGD(net.parameters(),lr=LEARNING_RATE, momentum=0.9, weight_decay=WEIGHT_DECAY)   #Adams検討
+        optimizer = optim.SGD(net.parameters(),lr=parameter.LEARNING_RATE, momentum=0.9, weight_decay=parameter.WEIGHT_DECAY)   #Adams検討
 
         train_sampler = SubsetRandomSampler(train_idx)
         val_sampler = SubsetRandomSampler(val_idx)
         train_dataloader = torch.utils.data.DataLoader(
-            trainval_dataset, batch_size=TRAIN_BATCH_SIZE,
+            trainval_dataset, batch_size=parameter.TRAIN_BATCH_SIZE,
             sampler=train_sampler, num_workers=2, drop_last=True
         )
         val_dataloader = torch.utils.data.DataLoader(
-            trainval_dataset, batch_size=TRAIN_BATCH_SIZE,
+            trainval_dataset, batch_size=parameter.TRAIN_BATCH_SIZE,
             sampler=val_sampler, num_workers=2, drop_last=True
         )
 
-        net, loss, acc, history = fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, device, fold)
+        net, loss, acc, history = fit(net, optimizer, criterion, parameter.EPOCH, train_dataloader, val_dataloader, device, fold)
         nets.append(net)
         losses.append(loss)
         accs.append(float(acc))
 
         #graph.plot_loss_acc(history[:,1], history[:,2], history[:,3], history[:,4], fold)
-        graph.evaluate_history(history, fold)
+        graph.evaluate_history(history, fold, parameter=Parameters1)
 
-        model_path = RESULT_DIR_PATH  + '/model' + str(fold+1) + '.pth'
+        model_path = parameter.RESULT_DIR_PATH  + '/model' + str(fold+1) + '.pth'
         torch.save(net.state_dict(), model_path)
 
 
@@ -77,7 +87,13 @@ def learning():
 
 
 
-def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, device, fold):
+    #show_images_labels(test_dataloader, classes, net, device)
+
+    return
+
+
+
+def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, device, file_path):
     history = np.zeros((0,5))
 
 
@@ -140,7 +156,7 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
 
         dt_now = datetime.datetime.now()    #jstに設定しなおす。
         epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
-        file_path = RESULT_DIR_PATH + "/" + EXPT_NUMBER + '.log'
+        #file_path = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + '.log'
 
 
         '''
@@ -169,5 +185,11 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
 
     return net, history[-1,3], history[-1,4], history
 
+
+
+
+
+
 if __name__ == "__main__":
-    learning()
+    learning(parameter=Parameters1)
+    # イメージとラベル表示
