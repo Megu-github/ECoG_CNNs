@@ -7,12 +7,12 @@ class Parameters1():
     RESULT_DIR_PATH = '/home/megu/ECoG_CNNs/Result/' + EXPT_NUMBER
 
 
-    TEST_DATASET_PATH = '/home/megu/CNN_Dataset/Debug_Dataset' # セーバーにDATASETをコピーして、そのpathを書く
-    TEST_BATCH_SIZE = 2
+    TEST_DATASET_PATH = '/home/megu/CNN_Dataset/MK3_expt.1' # セーバーにDATASETをコピーして、そのpathを書く
+    TEST_BATCH_SIZE = 5
 
-    TRAIN_DATASET_PATH = '/home/megu/CNN_Dataset/Debug_Dataset' # セーバーにDATASETをコピーして、そのpathを書く
+    TRAIN_DATASET_PATH = '/home/megu/CNN_Dataset/MK3_expt.1' # セーバーにDATASETをコピーして、そのpathを書く
     TRAIN_BATCH_SIZE = 2
-    EPOCH = 1
+    EPOCH = 10
 
     classes = ('Anesthetized', 'EyesClosed')
 

@@ -1,0 +1,8 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+/home/megu/.pyenv/versions/3.7.9/bin/python: can't open file 'main.py': [Errno 2] No such file or directory
+start time:  1638933413
+end time:  1638933413
+run time:  0
