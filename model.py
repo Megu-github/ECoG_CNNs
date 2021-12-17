@@ -1,5 +1,4 @@
 import torch.nn as nn
-from parameters import RESIZE
 
 
 # PytorchでのCNNのモデル作り

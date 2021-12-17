@@ -1,0 +1,16 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+Traceback (most recent call last):
+  File "test_smoothgrad.py", line 166, in <module>
+    test_smoothgrad(parameter=Parameters1)
+  File "test_smoothgrad.py", line 37, in test_smoothgrad
+    net.load_state_dict(torch.load(model_path))     # 5回ループを回す
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1052, in load_state_dict
+    self.__class__.__name__, "\n\t".join(error_msgs)))
+RuntimeError: Error(s) in loading state_dict for CNNs:
+	Missing key(s) in state_dict: "bn1.weight", "bn1.bias", "bn1.running_mean", "bn1.running_var", "bn2.weight", "bn2.bias", "bn2.running_mean", "bn2.running_var", "bn3.weight", "bn3.bias", "bn3.running_mean", "bn3.running_var". 
+start time:  1639728354
+end time:  1639728360
+run time:  6

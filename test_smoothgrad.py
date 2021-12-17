@@ -7,21 +7,21 @@ import os
 
 import torch
 import torch.utils.data as data
-import torch.optim as optim
 import torch.nn as nn
+from torchvision.utils import save_image
 
 from visualize_pytorch.src.smoothGrad import *
 import model
 import dataset
-from parameters import *
-
-
+from parameters import Parameters1, Parameters2
 
 
 
 def test_smoothgrad(parameter):
 
-    test_dataset = dataset.MyDataset(parameter.TEST_DATASET_PATH + "/test", (parameter.RESIZE[0], parameter.RESIZE[1]))  #元画像に近い形にリサイズする　小さくする必要ない
+    # test_dataset = dataset.pytorch_book(parameter.TEST_DATASET_PATH)
+    test_dataset = dataset.MyDataset(parameter.TEST_DATASET_PATH + "/test", (parameter.RESIZE[0], parameter.RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+
 
     test_dataloader = data.DataLoader(
         test_dataset, batch_size=parameter.TEST_BATCH_SIZE, shuffle=False,
@@ -29,20 +29,21 @@ def test_smoothgrad(parameter):
     )
 
     device = torch.device(parameter.DEVICE)
-    net = model.CNNs()
+    net = model.CNNs(0, 0, use_Barch_Norm=False)
     net = net.to(device)
     criterion = nn.CrossEntropyLoss()
 
-    model_path = parameter.RESULT_DIR_PATH + '/model.pth'
-    net.load_state_dict(torch.load(model_path))     # 5回ループを回す
+    for num in range(5):
+        model_path = parameter.RESULT_DIR_PATH + '/model' + str(num + 1) + '.pth'
+        net.load_state_dict(torch.load(model_path))     # 5回ループを回す
 
 
-    for param in net.parameters():
-        param.requires_grad = False  # 勾配を計算しない
+        for param in net.parameters():
+            param.requires_grad = False  # 勾配を計算しない
 
-    test(net, criterion, test_dataloader, device)
+        test(net, criterion, test_dataloader, device, parameter)
 
-    make_smoothgrad(net, test_dataloader)
+        make_smoothgrad(net, test_dataloader, parameter)
 
 
 def test(net, criterion, test_dataloader, device, parameter):
@@ -80,6 +81,8 @@ def test(net, criterion, test_dataloader, device, parameter):
         test_loss_value.append(sum_loss*parameter.TEST_BATCH_SIZE/len(test_dataloader.dataset))
         test_acc_value.append(float(sum_correct/sum_total))
 
+    print("finish")
+
     return
 
 
@@ -89,6 +92,7 @@ def make_smoothgrad(net, test_dataloader, parameter):
     for (images, labels) in test_dataloader:
         for img_raw, label in zip(images, labels):
             cnt += 1
+
             # images, batches = next(iter(test_dataloader))
             # img_raw = images[idx_data]
             # label = labels[idx_data]
@@ -96,6 +100,12 @@ def make_smoothgrad(net, test_dataloader, parameter):
             fname_common = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + "/" + parameter.classes[label]
             fname_original = fname_common + '/original/raw_image' +str(cnt) + ".png"
             fname_smooth_grad = fname_common + '/smooth_grad/smoothgrad' +str(cnt) + ".png"
+
+
+            os.makedirs(fname_common + '/original', exist_ok=True)
+            os.makedirs(fname_common + '/smooth_grad', exist_ok=True)
+
+
             # print(img.size())
             # print(img[0].size())
             # print(f"Label: {batch}")
@@ -105,7 +115,10 @@ def make_smoothgrad(net, test_dataloader, parameter):
                                     n_samples=20)
             smooth_cam, _ = smooth_grad(img)
             # plot
-            plt.imsave(fname_original, img_raw)
+            # img_raw = torch.movedim(img_raw, 0, 2)
+            # img_raw = img_raw.to('cpu').numpy()
+            save_image(img_raw, fname_original)
+            # plt.imsave(fname_original, img_raw)
             cv2.imwrite(fname_smooth_grad, show_as_gray_image(smooth_cam))
             syn_smoothgrad(fname_common, cnt)
 
@@ -160,5 +173,5 @@ def syn_smoothgrad(fname_common, cnt):
     return
 
 
-if __name__ == "__test__":
-    test_smoothgrad()
+if __name__ == "__main__":
+    test_smoothgrad(parameter=Parameters1)

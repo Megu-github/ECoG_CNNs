@@ -1,0 +1,23 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+finish
+  0%|          | 0/20 [00:00<?, ?it/s]100%|██████████| 20/20 [00:00<00:00, 270.31it/s]
+Traceback (most recent call last):
+  File "test_smoothgrad.py", line 166, in <module>
+    test_smoothgrad(parameter=Parameters1)
+  File "test_smoothgrad.py", line 45, in test_smoothgrad
+    make_smoothgrad(net, test_dataloader, parameter)
+  File "test_smoothgrad.py", line 110, in make_smoothgrad
+    plt.imsave(fname_original, img_raw)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/pyplot.py", line 2251, in imsave
+    return matplotlib.image.imsave(fname, arr, **kwargs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/image.py", line 1577, in imsave
+    rgba = sm.to_rgba(arr, bytes=True)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/matplotlib/cm.py", line 311, in to_rgba
+    raise ValueError("Third dimension must be 3 or 4")
+ValueError: Third dimension must be 3 or 4
+start time:  1639728862
+end time:  1639728873
+run time:  11

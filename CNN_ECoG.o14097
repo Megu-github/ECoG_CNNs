@@ -1,0 +1,13 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+Traceback (most recent call last):
+  File "test_smoothgrad.py", line 166, in <module>
+    test_smoothgrad(parameter=Parameters1)
+  File "test_smoothgrad.py", line 43, in test_smoothgrad
+    test(net, criterion, test_dataloader, device)
+TypeError: test() missing 1 required positional argument: 'parameter'
+start time:  1639728459
+end time:  1639728462
+run time:  3

@@ -1,0 +1,15 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+Traceback (most recent call last):
+  File "learning.py", line 182, in <module>
+    learning(parameter=Parameters1)
+  File "learning.py", line 58, in learning
+    sampler=train_sampler, num_workers=2, drop_last=True
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 237, in __init__
+    raise ValueError('sampler option is mutually exclusive with '
+ValueError: sampler option is mutually exclusive with shuffle
+start time:  1638947150
+end time:  1638947154
+run time:  4

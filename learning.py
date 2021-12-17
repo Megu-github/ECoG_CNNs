@@ -7,6 +7,8 @@ import torch.optim as optim
 import torch.utils.data
 import torch.nn as nn
 from sklearn.model_selection import KFold
+import torchvision.datasets as datasets
+import torchvision.transforms as transforms
 from torch.utils.data.dataset import Dataset
 from torch.utils.data.sampler import SubsetRandomSampler
 from statistics import mean
@@ -27,16 +29,18 @@ def learning(parameter):
     os.makedirs(parameter.RESULT_DIR_PATH, exist_ok=True)
 
     #load Dataset
-    #trainval_dataset = dataset.MyDataset(TRAIN_DATASET_PATH + "/train", (RESIZE[0], RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    trainval_dataset = dataset.MyDataset(parameter.TRAIN_DATASET_PATH + "/train", (parameter.RESIZE[0], parameter.RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
 
-    trainval_dataset = dataset.pytorch_book(parameter.TRAIN_DATASET_PATH)
-    test_dataset = dataset.pytorch_book(parameter.TEST_DATASET_PATH)
-
-    test_dataloader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=parameter.TEST_BATCH_SIZE,
-        num_workers=2, drop_last=True
-    )
-
+    #trainval_dataset = dataset.pytorch_book(parameter.TRAIN_DATASET_PATH)
+    '''
+    train_transform = transforms.Compose([
+        transforms.Resize(224),
+        transforms.ToTensor(),
+    ])
+    train_dir = os.path.join(parameter.TRAIN_DATASET_PATH, 'train')
+    trainval_dataset = datasets.ImageFolder(train_dir,
+                        transform=train_transform)
+    '''
 
     device = torch.device(parameter.DEVICE)
 
@@ -51,7 +55,6 @@ def learning(parameter):
     splits = KFold(n_splits=5, shuffle=True, random_state=26)   # random_stateの値は要検討
     for fold, (train_idx, val_idx) in enumerate(splits.split(trainval_dataset)):
         file_path = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + '.log'
-        print("model name: model", fold + 1)
         with open(file_path, 'a') as f:
             print("model name: model", fold + 1, file=f)
 
@@ -69,7 +72,7 @@ def learning(parameter):
             sampler=val_sampler, num_workers=2, drop_last=True
         )
 
-        net, loss, acc, history = fit(net, optimizer, criterion, parameter.EPOCH, train_dataloader, val_dataloader, device, fold)
+        net, loss, acc, history = fit(net, optimizer, criterion, parameter.EPOCH, train_dataloader, val_dataloader, device, file_path)
         nets.append(net)
         losses.append(loss)
         accs.append(float(acc))
@@ -136,20 +139,15 @@ def fit(net, optimizer, criterion, EPOCH, train_dataloader, val_dataloader, devi
             used_datasize += len(labels)
             inputs, labels = inputs.to(device), labels.to(device)
 
-            # 予測計算
             outputs = net(inputs)
 
-            # 損失計算
             loss = criterion(outputs, labels)
             val_loss += loss.item()
 
-            # 予測値算出
             predicted = torch.max(outputs, 1)[1]
 
-            # 正解件数算出
             val_acc += (predicted == labels).sum()
 
-            # 損失と精度の計算
             avg_val_loss = val_loss / used_datasize
             avg_val_acc = val_acc / used_datasize
 
