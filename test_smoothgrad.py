@@ -1,153 +1,185 @@
 import datetime
-import matplotlib.pyplot as plt
-import cv2
-from pathlib import Path
 import os
+from pathlib import Path
+from statistics import mean
 
-
+import cv2
+import numpy as np
 import torch
 import torch.utils.data as data
 import torch.nn as nn
 from torchvision.utils import save_image
 
-from visualize_pytorch.src.smoothGrad import *
+import visualize_pytorch.src.smoothGrad as smoothGrad
 import model
 import dataset
-from parameters import Parameters1, Parameters2
-
+import parameters
 
 
 def test_smoothgrad(parameter):
+    file_path = parameter.RESULT_DIR_PATH + "/" + \
+        parameter.EXPT_NUMBER + '.log'
+    with open(file_path, 'a') as f:
+        print("### TEST RESULT ###", file=f)
 
-    # test_dataset = dataset.pytorch_book(parameter.TEST_DATASET_PATH)
-    test_dataset = dataset.MyDataset(parameter.TEST_DATASET_PATH + "/test", (parameter.RESIZE[0], parameter.RESIZE[1]))    #画像のリサイズはいくらにするか？　これは学習とテストに影響を与える
+    target_epoch = parameter.TEST_EPOCH
 
-
-    test_dataloader = data.DataLoader(
-        test_dataset, batch_size=parameter.TEST_BATCH_SIZE, shuffle=False,
-        num_workers=2, drop_last=True
+    test_dataset = dataset.get_dataset(
+        dataset_class=parameter.DATASET_CLASS,
+        dataset_dir=os.path.join(parameter.TRAIN_DATASET_PATH, 'test'),
+        parameter=parameter,
+        resize=parameter.RESIZE,
+        # save_dir=parameter.RESULT_DIR_PATH,
+        save_dir=None,
     )
-
+    test_dataloader = data.DataLoader(
+        test_dataset,
+        batch_size=parameter.TEST_BATCH_SIZE,
+        shuffle=True,  # False,
+        num_workers=2,
+        drop_last=True,
+    )
     device = torch.device(parameter.DEVICE)
-    net = model.CNNs(0, 0, use_Barch_Norm=False)
-    net = net.to(device)
     criterion = nn.CrossEntropyLoss()
 
-    for num in range(5):
-        model_path = parameter.RESULT_DIR_PATH + '/model' + str(num + 1) + '.pth'
-        net.load_state_dict(torch.load(model_path))     # 5回ループを回す
+    accs, losses = [], []
 
-
+    for fold in range(parameter.N_SPLITS):
+        # network setting
+        net = model.CNNs(
+            use_Barch_Norm=parameter.USE_BATCH_NORM,
+            use_dropout=parameter.USE_DROPOUT,
+            p_dropout1=parameter.P_DROPOUT1,
+            p_dropout2=parameter.P_DROPOUT2,
+        ).to(device)
+        model_path = parameter.RESULT_DIR_PATH + \
+            '/model_fold' + str(fold + 1) + \
+            '_epoch' + str(target_epoch) + '.pth'
+        net.load_state_dict(torch.load(model_path))
         for param in net.parameters():
             param.requires_grad = False  # 勾配を計算しない
 
-        test(net, criterion, test_dataloader, device, parameter)
+        # test
+        loss, acc = test(
+            net=net,
+            criterion=criterion,
+            test_dataloader=test_dataloader,
+            device=device
+        )
+        losses.append(loss)
+        accs.append(acc)
 
+        # log
+        epoch_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        with open(file_path, 'a') as f:
+            print("fold: ", fold + 1, file=f)
+            print(model_path, 'was loaded', file=f)
+            print('test', epoch_time, file=f)
+            print("test  mean loss={}, accuracy={}".format(loss, acc), file=f)
+        print("test finish")
+
+        # smooth grad
         make_smoothgrad(net, test_dataloader, parameter)
 
+    with open(file_path, 'a') as f:
+        print("losses: ", losses, "\naccs: ", accs, file=f)
+        print("all mean loss: {:4f}".format(mean(losses)), file=f)
+        print("all mean acc: {:4f}".format(mean(accs)), file=f)
 
-def test(net, criterion, test_dataloader, device, parameter):
+
+def test(net, criterion, test_dataloader, device):
     """
     testのみ
     """
-    test_loss_value=[]       #testのlossを保持するlist
-    test_acc_value=[]        #testのaccuracyを保持するlist
-
     #test dataを使ってテストをする
     # test_loss_value, test_acc_value = log_observe(test_dataloader, "test")
 
-    sum_loss = 0.0
-    sum_correct = 0
-    sum_total = 0
+    net.eval()
+    test_loss = 0.0
+    test_acc = 0
+    used_datasize = 0
 
-
-    for (inputs, labels) in test_dataloader:
+    for inputs, labels in test_dataloader:
+        used_datasize += len(labels)
         inputs, labels = inputs.to(device), labels.to(device)
         outputs = net(inputs)
         loss = criterion(outputs, labels)
-        sum_loss += loss.item()
-        _, predicted = outputs.max(1)
-        sum_total += labels.size(0)
-        sum_correct += (predicted == labels).sum().item()
 
-    path = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + '.log'
-    dt_now = datetime.datetime.now()
-    epoch_time = dt_now.strftime('%Y-%m-%d %H:%M:%S')
+        test_loss += loss.item()
+        predicted = torch.max(outputs, 1)[1]
+        test_acc += float((predicted == labels).sum())
 
-    with open(path, 'a') as f:
-        print('test', epoch_time, file=f)
-        print("test  mean loss={}, accuracy={}".format(
-            sum_loss*parameter.TEST_BATCH_SIZE/len(test_dataloader.dataset), float(sum_correct/sum_total)), file=f)
-        test_loss_value.append(sum_loss*parameter.TEST_BATCH_SIZE/len(test_dataloader.dataset))
-        test_acc_value.append(float(sum_correct/sum_total))
+    avg_test_loss = test_loss / used_datasize
+    avg_test_acc = test_acc / used_datasize
 
-    print("finish")
-
-    return
-
+    return avg_test_loss, avg_test_acc
 
 
 def make_smoothgrad(net, test_dataloader, parameter):
     cnt = 0
     for (images, labels) in test_dataloader:
+        # for idx in range(len(images)):
         for img_raw, label in zip(images, labels):
             cnt += 1
 
-            # images, batches = next(iter(test_dataloader))
-            # img_raw = images[idx_data]
-            # label = labels[idx_data]
-            img = img_raw.unsqueeze(0)
-            fname_common = parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + "/" + parameter.classes[label]
-            fname_original = fname_common + '/original/raw_image' +str(cnt) + ".png"
-            fname_smooth_grad = fname_common + '/smooth_grad/smoothgrad' +str(cnt) + ".png"
+            if cnt < 300:
+                # img_raw, label = images[idx], labels[idx]
+                img = img_raw.unsqueeze(0)
+                fname_common = parameter.RESULT_DIR_PATH + "/" + \
+                    parameter.classes[label]
+                fname_original = fname_common + \
+                    '/original/raw_image' + str(cnt) + ".png"
+                fname_smooth_grad = fname_common + \
+                    '/smooth_grad/smoothgrad' + str(cnt) + ".png"
 
+                os.makedirs(fname_common + '/original', exist_ok=True)
+                os.makedirs(fname_common + '/smooth_grad', exist_ok=True)
 
-            os.makedirs(fname_common + '/original', exist_ok=True)
-            os.makedirs(fname_common + '/smooth_grad', exist_ok=True)
+                # smooth grad
+                smooth_grad = smoothGrad.SmoothGrad(
+                    net,
+                    use_cuda=True,
+                    stdev_spread=0.2,
+                    n_samples=20,
+                )
+                smooth_cam, _ = smooth_grad(img)
 
+                # plot
+                save_image(img_raw, fname_original)
+                cv2.imwrite(fname_smooth_grad,
+                            smoothGrad.show_as_gray_image(smooth_cam))
+                syn_smoothgrad(fname_common, cnt)
 
-            # print(img.size())
-            # print(img[0].size())
-            # print(f"Label: {batch}")
-            smooth_grad = SmoothGrad(net,
-                                    use_cuda=True,
-                                    stdev_spread=0.2,
-                                    n_samples=20)
-            smooth_cam, _ = smooth_grad(img)
-            # plot
-            # img_raw = torch.movedim(img_raw, 0, 2)
-            # img_raw = img_raw.to('cpu').numpy()
-            save_image(img_raw, fname_original)
-            # plt.imsave(fname_original, img_raw)
-            cv2.imwrite(fname_smooth_grad, show_as_gray_image(smooth_cam))
-            syn_smoothgrad(fname_common, cnt)
+    for idx, label in enumerate(parameter.classes):
+        fname_common = parameter.RESULT_DIR_PATH + "/" + \
+            parameter.classes[idx]
+        avarage_smoothgrad(fname_common + '/smooth_grad')
 
-    for label in range(2):
-        avarage_smoothgrad(parameter.RESULT_DIR_PATH + "/" + parameter.EXPT_NUMBER + "/" + parameter.classes[label] + '/smooth_grad')
+    subtract_average_image(fname_common=parameter.RESULT_DIR_PATH)
 
     return
 
 
-
 def avarage_smoothgrad(img_dir):
     input_dir = Path(img_dir)  # 画像があるディレクトリ
-
-    img_dir = "save_dir"
+    print("averaged directory: ", input_dir)
     os.makedirs(img_dir, exist_ok=True)
 
-
     imgs = []
-    for path in get_img_paths(input_dir):
-        # 画像を読み込む。
-        img = cv2.imread(str(path))
-        imgs.append(img)
+    img_paths = get_img_paths(input_dir)
+    if len(img_paths) > 0:
+        for path in img_paths:
+            img = cv2.imread(str(path))
+            imgs.append(img)
 
+        imgs = np.array(imgs)
+        print(imgs.shape)
+        assert imgs.ndim == 4, "error happen"
 
-    imgs = np.array(imgs)
-    assert imgs.ndim == 4, "すべての画像の大きさは同じでないといけない"
-
-    mean_img = imgs.mean(axis=0)
-    cv2.imwrite(img_dir + "/mean.png", mean_img)
+        mean_img = imgs.mean(axis=0)
+        cv2.imwrite(img_dir + "/mean.png", mean_img)
+    else:
+        print("no image files.")
     return
 
 
@@ -161,11 +193,14 @@ def get_img_paths(img_dir):
     return img_paths
 
 
-
 def syn_smoothgrad(fname_common, cnt):
+    os.makedirs(fname_common + '/synth/', exist_ok=True)
+
     fname_original = fname_common + '/original/raw_image' +str(cnt) + ".png"
-    fname_smooth_grad = fname_common + '/smooth_grad/smoothgrad' +str(cnt) + ".png"
+    fname_smooth_grad = fname_common + '/smooth_grad/smoothgrad' +str(
+        cnt) + ".png"
     fname_syn = fname_common + "/synth/syn_image" +str(cnt) + ".png"
+
     src1 = cv2.imread(fname_original)
     src2 = cv2.imread(fname_smooth_grad)
     dst = cv2.addWeighted(src1, 0.5, src2, 0.5, 0)
@@ -173,5 +208,34 @@ def syn_smoothgrad(fname_common, cnt):
     return
 
 
+def subtract_average_image(fname_common):
+    """
+    Reference:
+    https://note.nkmk.me/python-opencv-numpy-image-difference/
+    """
+    fname_original = fname_common + '/Anesthetized/smooth_grad/mean.png'
+    fname_smooth_grad = fname_common + '/EyesClosed/smooth_grad/mean.png'
+    img_original = cv2.imread(fname_original)
+    img_smooth_grad = cv2.imread(fname_smooth_grad)
+
+    assert img_original.shape == img_smooth_grad.shape, \
+        "different shape images"
+
+    img_diff = img_original.astype(int) - img_smooth_grad.astype(int)
+    img_diff_abs = np.abs(img_diff)
+    img_diff_norm = img_diff_abs / img_diff_abs.max() * 255
+    img_diff_center = np.floor_divide(img_diff, 2) + 128
+    img_diff_center_norm = img_diff / np.abs(img_diff).max() * 127.5 + 127.5
+
+    cv2.imwrite(fname_common + "/subtracted_mean_normal.png", img_diff)
+    cv2.imwrite(fname_common + "/subtracted_mean_abs.png", img_diff_abs)
+    cv2.imwrite(fname_common + "/subtracted_mean_norm.png", img_diff_norm)
+    cv2.imwrite(fname_common + "/subtracted_mean_center.png", img_diff_center)
+    cv2.imwrite(fname_common + "/subtracted_mean_center_norm.png",
+                img_diff_center_norm)
+
+    return
+
+
 if __name__ == "__main__":
-    test_smoothgrad(parameter=Parameters1)
+    test_smoothgrad(parameter=parameters.Parameters1)

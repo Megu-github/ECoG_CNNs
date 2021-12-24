@@ -8,6 +8,9 @@ import torch.utils.data as data
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
+import graph
+
+
 class MyDataset(data.Dataset):
     def __init__(self, dir_path, input_size):
         super().__init__()
@@ -15,7 +18,9 @@ class MyDataset(data.Dataset):
         self.dir_path = dir_path
         self.input_size = input_size
 
-        self.image_paths = [str(p) for p in Path(self.dir_path).glob("**/*.png")]
+        self.image_paths = [
+            str(p) for p in Path(self.dir_path).glob("**/*.png")
+        ]
         self.len = len(self.image_paths)
 
     def __len__(self):
@@ -37,6 +42,39 @@ class MyDataset(data.Dataset):
 
         return image, label
 
+
+def get_dataset(dataset_class,
+                dataset_dir,
+                parameter,
+                save_dir=None,
+                resize=None):
+
+    if dataset_class == 'my_dataset':
+        load_dataset = MyDataset(dataset_dir, (resize, resize))
+
+    elif dataset_class == 'image_folder':
+        trainval_transform = transforms.Compose([
+            transforms.Resize((resize, resize)),
+            transforms.ToTensor(),
+        ])
+        load_dataset = datasets.ImageFolder(
+            root=dataset_dir,
+            transform=trainval_transform,
+        )
+
+    elif dataset_class == 'pytorch_book':
+        # load_dataset = pytorch_book(dataset_dir)
+        pass
+    else:
+        load_dataset = None
+        raise Exception('Wrong dataset_class: ', dataset_class)
+
+    if save_dir is not None:
+        graph.plot_dataset(dataset=load_dataset, parameter=parameter)
+        graph.plot_dataset_with_label(dataset=load_dataset,
+                                      parameter=parameter)
+
+    return load_dataset
 
 
 def pytorch_book(data_dir):
