@@ -1,4 +1,5 @@
 import datetime
+import pytz
 import os
 
 import numpy as np
@@ -80,7 +81,7 @@ def learning(parameter):
             epoch_size=parameter.EPOCH,
             train_dataloader=train_dataloader,
             val_dataloader=val_dataloader,
-            decice=device,
+            device=device,
             log_path=log_path,
             model_save_path=parameter.RESULT_DIR_PATH + '/model_fold' +
             str(fold + 1)
@@ -88,7 +89,7 @@ def learning(parameter):
         nets.append(net)
         losses.append(loss)
         accs.append(float(acc))
-
+        '''
         graph.plot_loss_acc(
             train_loss_value=history[:, 1],
             train_acc_value=history[:, 2],
@@ -97,6 +98,7 @@ def learning(parameter):
             fold=fold,
             parameter=parameter
         )
+        '''
         graph.evaluate_history(history, fold, parameter=parameter)
         np.savetxt(parameter.RESULT_DIR_PATH + '/history_fold' +
                    str(fold + 1) + '.csv',
@@ -118,7 +120,7 @@ def learning(parameter):
 
 def fit(net, optimizer, criterion, epoch_size, train_dataloader,
         val_dataloader, device, log_path, model_save_path):
-    save_every = 1          # modelの保存を何EPOCHごとに行うか。 model.pthはテキストデータなので多めでおっけ。
+    save_every = 50          # modelの保存を何EPOCHごとに行うか。 model.pthはテキストデータなので多めでおっけ。
     history = np.zeros((0,5))
     with open(log_path, 'a') as f:
         print(net, optimizer, file=f)
@@ -159,7 +161,7 @@ def fit(net, optimizer, criterion, epoch_size, train_dataloader,
         )
 
         # log
-        epoch_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        epoch_time = str(datetime.datetime.now(pytz.timezone('Asia/Tokyo')).strftime('%Y-%m-%d %H:%M:%S'))
         with open(log_path, 'a') as f:
             print(epoch_time, file=f)
             print(
@@ -185,6 +187,7 @@ def get_optimizer(optimizer_class, net, parameter):
         optimizer = optim.Adam(
             net.parameters(),
             lr=parameter.LEARNING_RATE,
+            weight_decay=parameter.WEIGHT_DECAY
         )
     elif optimizer_class == 'sgd':
         optimizer = optim.SGD(

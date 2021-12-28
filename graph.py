@@ -1,9 +1,9 @@
 import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-
-
-from parameters import *
+import torch
+from torchvision.utils import save_image
 '''
 # 結果を保存するpathを生成
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -62,7 +62,7 @@ def evaluate_history(history, fold, parameter):
     parameter.EXPT_NUMBER + '.log'
     with open(file_path, 'a') as f:
         print(f'初期状態: 損失: {history[0,3]:.5f} 精度: {history[0,4]:.5f}', file=f)
-        print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}', file=f )
+        print(f'最終状態: 損失: {history[-1,3]:.5f} 精度: {history[-1,4]:.5f}', file=f)
 
     num_epochs = len(history)
     unit = num_epochs / 10
@@ -98,9 +98,6 @@ def evaluate_history(history, fold, parameter):
     plt.close()
 
 def plot_dataset(dataset, parameter):
-    import torch
-    from torchvision.utils import save_image
-
     print("plot dataset.")
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=10)
     save_dir = parameter.RESULT_DIR_PATH
@@ -137,3 +134,34 @@ def plot_dataset_with_label(dataset, parameter):
                 plt.savefig(fname)
 
         return
+
+
+def plot_dataset_using_old_source(dataset, parameter):
+    """
+    good plotting even if using `my_dataset`
+    """
+    print("plot dataset using old code.")
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=10)
+
+    save_dir = parameter.RESULT_DIR_PATH
+    os.makedirs(save_dir + '/dataset/', exist_ok=True)
+    classes = parameter.classes
+    cnt = 0
+
+    for idx_batch, (images, labels) in enumerate(dataloader):
+        for image, label in zip(images, labels):
+            cnt += 1
+
+            # old version
+            fname = save_dir + '/dataset/plot_dataset_img_old_' + \
+                classes[label] + str(cnt) + '.png'
+            plt.imsave(fname, image[0])  # `[0]` is very important.
+
+            # correct version
+            fname = save_dir + '/dataset/plot_dataset_img_correct_' + \
+                classes[label] + str(cnt) + '.png'
+            image = image.to('cpu').numpy()
+            image = np.transpose(image, (1, 2, 0))
+            plt.imsave(fname, image / 255)  # convertion of RGB to 0-1 range
+
+    return

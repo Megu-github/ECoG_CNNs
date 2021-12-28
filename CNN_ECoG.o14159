@@ -1,0 +1,34 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-7bbdfddb-899d-ec05-00f1-27e63c9f71b9
+####################
+####################
+condition:  0 ('adam', 0, 0.0005)
+start learning
+  0%|          | 0/4 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "run.py", line 103, in <module>
+    run_grid_search_single_comparing()
+  File "run.py", line 94, in run_grid_search_single_comparing
+    run_one_condition(parameter=parameter)
+  File "run.py", line 20, in run_one_condition
+    learning(parameter=parameter)
+  File "/new_nas/megu/ECoG_CNNs/learning.py", line 87, in learning
+    str(fold + 1)
+  File "/new_nas/megu/ECoG_CNNs/learning.py", line 141, in fit
+    outputs = net(inputs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/new_nas/megu/ECoG_CNNs/model.py", line 54, in forward
+    x = self.conv2(x)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 423, in forward
+    return self._conv_forward(input, self.weight)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 420, in _conv_forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: CUDA out of memory. Tried to allocate 1.53 GiB (GPU 0; 10.92 GiB total capacity; 9.00 GiB already allocated; 1.22 GiB free; 9.00 GiB reserved in total by PyTorch)
+start time:  1640672001
+end time:  1640672049
+run time:  48

@@ -37,26 +37,58 @@ def run_grid_search():
 
 
 def run_grid_search_single_comparing():
-    ROOT_DIRECTORY = '/new_nas/common/kobayashi_211222/'
-    parameter_common = parameters.ParametersDebug1
+    parameter_common = parameters.ParametersDebug10
+    use_parameter_dict_key = [
+        #'optimizer',
+        #'weight_decay',
+        #'lr',
+        'use_dropout',
+        'use_batch_norm',
+        #'p_dropout1',
+        #'p_dropout2',
+        ]
+    parameter_dict = {
+        'dataset': ['my_dataset', 'image_folder'],
+        'optimizer': ['adam',],
+        'weight_decay': [0,],
+        'lr': [ 0.0005, 0.0001, 0.00005,],
+        'use_dropout': [False, True],
+        'use_batch_norm': [False, True],
+        'p_dropout1': [0,1, 0.2, 0.3],
+        'p_dropout2': [0.3, 0.4, 0.5],
+    }
+    parameter_dict_value = []
+    for idx in range(len(use_parameter_dict_key)):
+        parameter_dict_value.append(
+            parameter_dict[
+                use_parameter_dict_key[idx]
+                ]
+            )
+
     parameter_list = itertools.product(
-        ['my_dataset', 'image_folder'],
-        [['adam', 0.001], ['sgd', 0.0001]],
-        [True, False],
+        *parameter_dict_value
     )
 
     for idx, parameter_change in enumerate(parameter_list):
         print("####################")
         print("####################")
         print("condition: ", str(idx), parameter_change)
+        parameter_change_dict = dict(
+            zip(use_parameter_dict_key, parameter_change)
+            )
 
         parameter = parameter_common
-        parameter.DATASET_CLASS = parameter_change[0]
-        parameter.OPTIMIZER_CLASS = parameter_change[1][0]
-        parameter.LEARNING_RATE = parameter_change[1][1]
-        parameter.USE_DROPOUT = parameter_change[2]
-        parameter.RESULT_DIR_PATH = ROOT_DIRECTORY + \
-            'ECoG_CNNs/Result/211224/' + '_'.join([
+        # parameter.DATASET_CLASS = parameter_change_dict['dataset']
+        #parameter.OPTIMIZER_CLASS = parameter_change_dict['optimizer']
+        #parameter.WEIGHT_DECAY = parameter_change_dict['weight_decay']
+        #parameter.LEARNING_RATE = parameter_change_dict['lr']
+
+        parameter.USE_DROPOUT = parameter_change_dict['use_dropout']
+        parameter.USE_BATCH_NORM = parameter_change_dict['use_batch_norm']
+        #parameter.P_DROPOUT1 = parameter_change_dict['p_dropout1']
+        #parameter.P_DROPOUT2 = parameter_change_dict['p_dropout2']
+        parameter.RESULT_DIR_PATH = parameters.ROOT_DIRECTORY + \
+            'ECoG_CNNs/Result/' + parameters.EXPT_DATE + '/' + '_'.join([
                 str(param) for param in parameter_change])
 
         run_one_condition(parameter=parameter)
@@ -66,6 +98,6 @@ def run_grid_search_single_comparing():
 if __name__ == "__main__":
     # learning(parameter=parameters.Parameters1)
     # test_smoothgrad(parameter=parameters.Parameters1)
-    run_one_condition(parameter=parameters.Parameters1)
+    # run_one_condition(parameter=parameters.ParametersDebug3)
     # run_grid_search()
-    # run_grid_search_single_comparing()
+    run_grid_search_single_comparing()

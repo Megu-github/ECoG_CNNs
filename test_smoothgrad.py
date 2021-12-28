@@ -1,4 +1,5 @@
 import datetime
+import pytz
 import os
 from pathlib import Path
 from statistics import mean
@@ -9,6 +10,7 @@ import torch
 import torch.utils.data as data
 import torch.nn as nn
 from torchvision.utils import save_image
+import matplotlib.pyplot as plt
 
 import visualize_pytorch.src.smoothGrad as smoothGrad
 import model
@@ -35,7 +37,7 @@ def test_smoothgrad(parameter):
     test_dataloader = data.DataLoader(
         test_dataset,
         batch_size=parameter.TEST_BATCH_SIZE,
-        shuffle=True,  # False,
+        shuffle=False,
         num_workers=2,
         drop_last=True,
     )
@@ -70,7 +72,7 @@ def test_smoothgrad(parameter):
         accs.append(acc)
 
         # log
-        epoch_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        epoch_time = str(datetime.datetime.now(pytz.timezone('Asia/Tokyo')).strftime('%Y-%m-%d %H:%M:%S'))
         with open(file_path, 'a') as f:
             print("fold: ", fold + 1, file=f)
             print(model_path, 'was loaded', file=f)
@@ -122,7 +124,7 @@ def make_smoothgrad(net, test_dataloader, parameter):
         for img_raw, label in zip(images, labels):
             cnt += 1
 
-            if cnt < 300:
+            if cnt <= 100:    # True
                 # img_raw, label = images[idx], labels[idx]
                 img = img_raw.unsqueeze(0)
                 fname_common = parameter.RESULT_DIR_PATH + "/" + \
@@ -145,7 +147,13 @@ def make_smoothgrad(net, test_dataloader, parameter):
                 smooth_cam, _ = smooth_grad(img)
 
                 # plot
-                save_image(img_raw, fname_original)
+                if parameter.DATASET_CLASS == "image_folder":
+                    save_image(img_raw, fname_original)
+                elif parameter.DATASET_CLASS == 'my_dataset':
+                    img_raw = img_raw.to('cpu').numpy()
+                    img_raw = np.transpose(img_raw, (1, 2, 0))
+                    plt.imsave(fname_original, img_raw / 255)
+
                 cv2.imwrite(fname_smooth_grad,
                             smoothGrad.show_as_gray_image(smooth_cam))
                 syn_smoothgrad(fname_common, cnt)
@@ -162,7 +170,6 @@ def make_smoothgrad(net, test_dataloader, parameter):
 
 def avarage_smoothgrad(img_dir):
     input_dir = Path(img_dir)  # 画像があるディレクトリ
-    print("averaged directory: ", input_dir)
     os.makedirs(img_dir, exist_ok=True)
 
     imgs = []
@@ -173,7 +180,6 @@ def avarage_smoothgrad(img_dir):
             imgs.append(img)
 
         imgs = np.array(imgs)
-        print(imgs.shape)
         assert imgs.ndim == 4, "error happen"
 
         mean_img = imgs.mean(axis=0)
@@ -227,10 +233,10 @@ def subtract_average_image(fname_common):
     img_diff_center = np.floor_divide(img_diff, 2) + 128
     img_diff_center_norm = img_diff / np.abs(img_diff).max() * 127.5 + 127.5
 
-    cv2.imwrite(fname_common + "/subtracted_mean_normal.png", img_diff)
-    cv2.imwrite(fname_common + "/subtracted_mean_abs.png", img_diff_abs)
-    cv2.imwrite(fname_common + "/subtracted_mean_norm.png", img_diff_norm)
-    cv2.imwrite(fname_common + "/subtracted_mean_center.png", img_diff_center)
+    # cv2.imwrite(fname_common + "/subtracted_mean_normal.png", img_diff)
+    # cv2.imwrite(fname_common + "/subtracted_mean_abs.png", img_diff_abs)
+    # cv2.imwrite(fname_common + "/subtracted_mean_norm.png", img_diff_norm)
+    # cv2.imwrite(fname_common + "/subtracted_mean_center.png", img_diff_center)
     cv2.imwrite(fname_common + "/subtracted_mean_center_norm.png",
                 img_diff_center_norm)
 

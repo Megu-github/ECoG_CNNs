@@ -1,0 +1,16 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+start learning
+Traceback (most recent call last):
+  File "run.py", line 69, in <module>
+    run_one_condition(parameter=parameters.Parameters1)
+  File "run.py", line 20, in run_one_condition
+    learning(parameter=parameter)
+  File "/new_nas/megu/ECoG_CNNs/learning.py", line 86, in learning
+    str(fold + 1)
+TypeError: fit() got an unexpected keyword argument 'decice'
+start time:  1640334566
+end time:  1640334571
+run time:  5

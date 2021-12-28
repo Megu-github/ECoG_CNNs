@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l select=1:ncpus=1:mem=10G:ngpus=1
+#PBS -l select=1:ncpus=1:mem=10G:ngpus=1:host=s65
 #PBS -N CNN_ECoG
 #PBS -j oe
 
@@ -12,7 +12,7 @@ echo "cuda visible devices: " $CUDA_VISIBLE_DEVICES
 start_time=`date +%s`
 
 cd $PBS_O_WORKDIR
-python learning.py
+python run.py
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
