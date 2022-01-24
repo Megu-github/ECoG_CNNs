@@ -12,7 +12,7 @@ class ParametersCommon:
     # Training setting
     EPOCH = 100  # 100 or 5
     TEST_EPOCH = EPOCH
-    N_SPLITS = 2  # 5
+    N_SPLITS = 5  # 5
     WEIGHT_DECAY = 0
     LEARNING_RATE = 0.0005  # 0.001 using adam?
 
@@ -332,4 +332,499 @@ class ParametersDebug10(ParametersCommon):
 
     # Save
     EXPT_NUMBER = EXPT_DATE + '_' + DATASET_CLASS + '_' + OPTIMIZER_CLASS
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters11(ParametersCommon):
+    """
+    For search lr when imagefolder, adam, weight_decay=0
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/MK11_expt.2'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/MK11_expt.2'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + DATASET_CLASS + '_' + OPTIMIZER_CLASS
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters12(ParametersCommon):
+    """
+    Search p_dropout1, p_dropout2
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/MK11_expt.2'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/MK11_expt.2'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = True
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + DATASET_CLASS + '_' + OPTIMIZER_CLASS
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters13(ParametersCommon):
+    """
+    main experiment about recoding date using Recording_Date1
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Recording_Date1'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Recording_Date1'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + DATASET_CLASS + '_' + OPTIMIZER_CLASS
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters14(ParametersCommon):
+    """
+    main experiment about recoding date using Recording_Date2
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Recording_Date2'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Recording_Date2'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Recoding_Date2"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Base_Line(ParametersCommon):
+    """
+    main experiment about base line using Base_Line
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Base_Line'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Base_Line'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Base_Line"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Recoding_Date_Chibi(ParametersCommon):
+    """
+    main experiment about recoding date using Recoding_Date_Chibi
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Recoding_Date_Chibi'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Recoding_Date_Chibi'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Recoding_Date_Chibi"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_Chibi(ParametersCommon):
+    """
+    main experiment about indiviual using Individual_Chibi
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_Chibi'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_Chibi'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Individual_Chibi"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_KTMD(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_KTMD
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KTMD'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KTMD'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_KTMD"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_George(ParametersCommon):
+    """
+    main experiment about indiviual using Individual_George
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_George'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_George'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Individual_George"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_Kin2(ParametersCommon):
+    """
+    main experiment about indiviual using Individual_Kin2
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_Kin2'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_Kin2'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Individual_Kin2"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_Su(ParametersCommon):
+    """
+    main experiment about indiviual using Individual_Su
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_Su'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Individual_Su'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Individual_Su"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_KT(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_KT
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KT'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KT'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_KT"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_MD(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_MD
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_MD'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_MD'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_MD"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_PF(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_PF
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_PF'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_PF'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.2
+    USE_DROPOUT = False
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_PF"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+
+class Parameters_BN_DropOut(ParametersCommon):
+    """
+    main experiment about BN and DropOut using Base Line
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Base_Line'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Base_Line'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.5
+    USE_DROPOUT = True
+    USE_BATCH_NORM = True
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Base_Line"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_KTMD_Dropout(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_KTMD with Dropout
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KTMD'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KTMD'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.5
+    USE_DROPOUT = True
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_KTMD_Dropout"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_KT_Dropout(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_KT with Dropout
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KT'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_KT'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.5
+    USE_DROPOUT = True
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_KT_Dropout"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_MD_Dropout(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_MD with Dropout
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_MD'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_MD'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.5
+    USE_DROPOUT = True
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_MD_Dropout"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_PF_Dropout(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_PF with Dropout
+    """
+    # Directory and Dataset
+    DATASET_CLASS = "image_folder"
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_PF'
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/Anesthesia_PF'
+    classes = ('Anesthetized', 'EyesClosed')
+
+    # Training setting
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.5
+    USE_DROPOUT = True
+    USE_BATCH_NORM = False
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_PF_Dropout"
     RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER

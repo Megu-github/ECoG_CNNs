@@ -37,7 +37,7 @@ def run_grid_search():
 
 
 def run_grid_search_single_comparing():
-    parameter_common = parameters.ParametersDebug10
+    parameter_common = parameters.Parameters_BN_DropOut
     use_parameter_dict_key = [
         #'optimizer',
         #'weight_decay',
@@ -51,10 +51,10 @@ def run_grid_search_single_comparing():
         'dataset': ['my_dataset', 'image_folder'],
         'optimizer': ['adam',],
         'weight_decay': [0,],
-        'lr': [ 0.0005, 0.0001, 0.00005,],
-        'use_dropout': [False, True],
-        'use_batch_norm': [False, True],
-        'p_dropout1': [0,1, 0.2, 0.3],
+        'lr': [0.001,0.005,0.01,0.05,0.1,],
+        'use_dropout': [True, False],
+        'use_batch_norm': [True, False],
+        'p_dropout1': [0.1, 0.2, 0.3],
         'p_dropout2': [0.3, 0.4, 0.5],
     }
     parameter_dict_value = []
@@ -78,10 +78,10 @@ def run_grid_search_single_comparing():
             )
 
         parameter = parameter_common
-        # parameter.DATASET_CLASS = parameter_change_dict['dataset']
+        #parameter.DATASET_CLASS = parameter_change_dict['dataset']
         #parameter.OPTIMIZER_CLASS = parameter_change_dict['optimizer']
         #parameter.WEIGHT_DECAY = parameter_change_dict['weight_decay']
-        #parameter.LEARNING_RATE = parameter_change_dict['lr']
+        #arameter.LEARNING_RATE = parameter_change_dict['lr']
 
         parameter.USE_DROPOUT = parameter_change_dict['use_dropout']
         parameter.USE_BATCH_NORM = parameter_change_dict['use_batch_norm']
@@ -98,6 +98,6 @@ def run_grid_search_single_comparing():
 if __name__ == "__main__":
     # learning(parameter=parameters.Parameters1)
     # test_smoothgrad(parameter=parameters.Parameters1)
-    # run_one_condition(parameter=parameters.ParametersDebug3)
+    run_one_condition(parameter=parameters.Parameters_Anesthesia_PF_Dropout)
     # run_grid_search()
-    run_grid_search_single_comparing()
+    #run_grid_search_single_comparing()

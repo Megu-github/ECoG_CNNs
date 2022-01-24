@@ -7,6 +7,7 @@ from statistics import mean
 import cv2
 import numpy as np
 import torch
+#from torch._C import TreeView
 import torch.utils.data as data
 import torch.nn as nn
 from torchvision.utils import save_image
@@ -37,7 +38,7 @@ def test_smoothgrad(parameter):
     test_dataloader = data.DataLoader(
         test_dataset,
         batch_size=parameter.TEST_BATCH_SIZE,
-        shuffle=False,
+        shuffle=False,  #画像作成時少ない枚数で行えるようにするときはTrue
         num_workers=2,
         drop_last=True,
     )
@@ -124,7 +125,7 @@ def make_smoothgrad(net, test_dataloader, parameter):
         for img_raw, label in zip(images, labels):
             cnt += 1
 
-            if cnt <= 100:    # True
+            if True:    # True
                 # img_raw, label = images[idx], labels[idx]
                 img = img_raw.unsqueeze(0)
                 fname_common = parameter.RESULT_DIR_PATH + "/" + \
@@ -244,4 +245,4 @@ def subtract_average_image(fname_common):
 
 
 if __name__ == "__main__":
-    test_smoothgrad(parameter=parameters.Parameters1)
+    test_smoothgrad(parameter=parameters.Parameters12)
