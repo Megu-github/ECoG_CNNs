@@ -5,19 +5,29 @@ ROOT_DIRECTORY = '/home/megu/'
 EXPT_DATE = str(datetime.datetime.now(pytz.timezone('Asia/Tokyo')).date())
 
 class ParametersCommon:
+    DATASET_CLASS = "image_folder"
     # Common settings
     classes = ('Anesthetized', 'EyesClosed')
     DEVICE = "cuda"
 
     # Training setting
-    EPOCH = 100  # 100 or 5
-    TEST_EPOCH = EPOCH
+    EPOCH = 200  # 100 or 5
+    TEST_EPOCH = 100
     N_SPLITS = 5  # 5
     WEIGHT_DECAY = 0
     LEARNING_RATE = 0.0005  # 0.001 using adam?
 
-    # Model parameters
+    TRAIN_BATCH_SIZE = 1024
+    TEST_BATCH_SIZE = 128
+    OPTIMIZER_CLASS = 'adam'
     RESIZE = 224
+
+    # Model parameters
+    DEVICE = "cuda"
+    P_DROPOUT1 = 0.2
+    P_DROPOUT2 = 0.5
+    USE_DROPOUT = True
+    USE_BATCH_NORM = False
 
 
 class Parameters1(ParametersCommon):
@@ -827,4 +837,277 @@ class Parameters_Anesthesia_PF_Dropout(ParametersCommon):
 
     # Save
     EXPT_NUMBER = EXPT_DATE + '_' + "Anesthesia_PF_Dropout"
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Recording_Date_KTMD_Chibi_0621test(ParametersCommon):
+    """
+    main experiment about Recoding_Date using Recording_Date_KTMD_Chibi_0621test
+    """
+    # Directory and Dataset
+    Dataset = "Recording_Date_KTMD_Chibi_0621test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Recording_Date_KTMD_George_20110112_test(ParametersCommon):
+    """
+    main experiment about Recoding_Date using Recording_Date_KTMD_George_20110112_test
+    """
+    # Directory and Dataset
+    Dataset = "Recording_Date_KTMD_George_20110112_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Recording_Date_KTMD_George_20110113_test(ParametersCommon):
+    """
+    main experiment about Recoding_Date using Recording_Date_KTMD_George_20110113_test
+    """
+    # Directory and Dataset
+    Dataset = "Recording_Date_KTMD_George_20110113_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER =  EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Recording_Date_KTMD_George_20110114_test(ParametersCommon):
+    """
+    main experiment about Recoding_Date using Recording_Date_KTMD_George_20110114_test
+    """
+    # Directory and Dataset
+    Dataset = "Recording_Date_KTMD_George_20110114_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER =  EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_Chibi_2(ParametersCommon):
+    """
+    main experiment about Individual using Individual_Chibi_2
+    """
+    # Directory and Dataset
+    Dataset = "Individual_Chibi_2"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_George_2(ParametersCommon):
+    """
+    main experiment about Individual using Individual_George_2
+    """
+    # Directory and Dataset
+    Dataset = "Individual_George_2"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_Kin2_2(ParametersCommon):
+    """
+    main experiment about Individual using Individual_Kin2_2
+    """
+    # Directory and Dataset
+    Dataset = "Individual_Kin2_2"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Individual_Su_2(ParametersCommon):
+    """
+    main experiment about Individual using Individual_Su_2
+    """
+    # Directory and Dataset
+    Dataset = "Individual_Su_2"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_KTMD_test(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_KTMD_test
+    """
+    # Directory and Dataset
+    Dataset = "Anesthesia_KTMD_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_PF_test(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_PF_test
+    """
+    # Directory and Dataset
+    Dataset = "Anesthesia_PF_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_MD_test(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_MD_test
+    """
+    # Directory and Dataset
+    Dataset = "Anesthesia_MD_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_Anesthesia_KT_test(ParametersCommon):
+    """
+    main experiment about Anesthesia using Anesthesia_KT_test
+    """
+    # Directory and Dataset
+    Dataset = "Anesthesia_KT_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+
+class Parameters_Recording_Date_KTMD_Chibi_20110622_test(ParametersCommon):
+    """
+    main experiment about Anesthesia using Recording_Date_KTMD_Chibi_20110622_test
+    """
+    # Directory and Dataset
+    Dataset = "Recording_Date_KTMD_Chibi_20110622_test"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_frequency_KTMD(ParametersCommon):
+    """
+    main experiment about frequency using frequency_KTMD
+    """
+    # Directory and Dataset
+    Dataset = "frequency_KTMD"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_frequency_KT(ParametersCommon):
+    """
+    main experiment about frequency using frequency_KT
+    """
+    # Directory and Dataset
+    Dataset = "frequency_KT"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER =  EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_frequency_MD(ParametersCommon):
+    """
+    main experiment about frequency using frequency_MD
+    """
+    # Directory and Dataset
+    Dataset = "frequency_MD"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = EXPT_DATE + '_' + Dataset
+    RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER
+
+class Parameters_frequency_PF(ParametersCommon):
+    """
+    main experiment about frequency using frequency_PF
+    """
+    # Directory and Dataset
+    Dataset = "frequency_PF"
+
+    TRAIN_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    TEST_DATASET_PATH = ROOT_DIRECTORY + 'CNN_Dataset/' + Dataset
+    classes = ('Anesthetized', 'EyesClosed')
+
+
+    # Save
+    EXPT_NUMBER = '2022-02-05_' + Dataset
     RESULT_DIR_PATH = ROOT_DIRECTORY + 'ECoG_CNNs/Result/' + EXPT_NUMBER

@@ -1,0 +1,13 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-092c06ec-7745-e924-1b6d-ed9b638cb79a
+start test EPOCH=100
+test finish
+test finish
+test finish
+test finish
+test finish
+start time:  1644221963
+end time:  1644222034
+run time:  71

@@ -1,0 +1,22 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-092c06ec-7745-e924-1b6d-ed9b638cb79a
+start test EPOCH=100
+Traceback (most recent call last):
+  File "run.py", line 101, in <module>
+    run_one_condition(parameter=parameters.Parameters_Recording_Date_KTMD_Chibi_0621test)
+  File "run.py", line 22, in run_one_condition
+    test_smoothgrad(parameter=parameter)
+  File "/new_nas/megu/ECoG_CNNs/test_smoothgrad.py", line 61, in test_smoothgrad
+    net.load_state_dict(torch.load(model_path))
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/serialization.py", line 581, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/serialization.py", line 230, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/serialization.py", line 211, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/megu/ECoG_CNNs/Result/2022-02-07_Recording_Date_KTMD_Chibi_0621test/model_fold1_epoch100.pth'
+start time:  1644215423
+end time:  1644215427
+run time:  4

@@ -37,15 +37,36 @@ def learning(parameter):
 
     ## cross validation
     nets, accs, losses = [], [], []
-    splits = KFold(n_splits=parameter.N_SPLITS, shuffle=True,
-                    random_state=496)
+    splits = KFold(n_splits=parameter.N_SPLITS, shuffle=True, random_state=496)
 
-    for fold, (train_idx,
-            val_idx) in enumerate(splits.split(trainval_dataset)):
+    for fold, (train_idx,val_idx) in enumerate(splits.split(trainval_dataset)):
+
         log_path = parameter.RESULT_DIR_PATH + "/" + \
             parameter.EXPT_NUMBER + '.log'
         with open(log_path, 'a') as f:
             print("model name: model", fold + 1, file=f)
+
+        '''
+        n_samples = len(trainval_dataset)
+        train_size = int(n_samples *0.8)
+        val_size = n_samples - train_size
+        train_dataset, val_dataset = torch.utils.data.random_split(trainval_dataset, [train_size, val_size])
+
+        train_dataloader = torch.utils.data.DataLoader(
+            train_dataset,
+            batch_size=parameter.TRAIN_BATCH_SIZE,
+            num_workers=2,
+            drop_last=True
+        )
+        val_dataloader = torch.utils.data.DataLoader(
+            val_dataset,
+            batch_size=parameter.TRAIN_BATCH_SIZE,
+            num_workers=2,
+            drop_last=True
+        )
+        '''
+        
+        # KFold使う時のdataloder
 
         train_sampler = SubsetRandomSampler(train_idx)
         val_sampler = SubsetRandomSampler(val_idx)
@@ -63,6 +84,7 @@ def learning(parameter):
             num_workers=2,
             drop_last=True
         )
+        
         net = model.CNNs(
             use_Barch_Norm=parameter.USE_BATCH_NORM,
             use_dropout=parameter.USE_DROPOUT,
@@ -101,9 +123,9 @@ def learning(parameter):
         '''
         graph.evaluate_history(history, fold, parameter=parameter)
         np.savetxt(parameter.RESULT_DIR_PATH + '/history_fold' +
-                   str(fold + 1) + '.csv',
-                   history,
-                   delimiter=',')
+                    str(fold + 1) + '.csv',
+                    history,
+                    delimiter=',')
 
         model_path = parameter.RESULT_DIR_PATH  + \
         '/model_fold' + str(fold+1) + '.pth'
@@ -113,7 +135,7 @@ def learning(parameter):
         print("all mean loss: {:4f}".format(mean(losses)), file=f)
         print("all mean acc: {:4f}".format(mean(accs)), file=f)
 
-    #show_images_labels(test_dataloader, classes, net, device)
+        #show_images_labels(test_dataloader, classes, net, device)
 
     return
 

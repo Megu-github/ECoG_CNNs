@@ -16,9 +16,9 @@ def run_one_condition(parameter):
         print("Parameter:\n", file=f)
         for key, val in vars(parameter).items():
             print(key, ':\t', val, file=f)
-    print("start learning")
-    learning(parameter=parameter)
-    print("start test and visualizing")
+    # print("start learning")
+    # learning(parameter=parameter)
+    print("start test EPOCH=100")
     test_smoothgrad(parameter=parameter)
 
 
@@ -98,6 +98,6 @@ def run_grid_search_single_comparing():
 if __name__ == "__main__":
     # learning(parameter=parameters.Parameters1)
     # test_smoothgrad(parameter=parameters.Parameters1)
-    run_one_condition(parameter=parameters.Parameters_Anesthesia_PF_Dropout)
+    run_one_condition(parameter=parameters.Parameters_frequency_PF)
     # run_grid_search()
     #run_grid_search_single_comparing()
