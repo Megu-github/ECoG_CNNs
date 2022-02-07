@@ -1,0 +1,19 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-6abed7df-6cf8-3858-12e5-82404cba23a2
+start learning
+0it [00:00, ?it/s]
+Traceback (most recent call last):
+  File "run.py", line 101, in <module>
+    run_one_condition(parameter=parameters.Parameters_Recording_Date_KTMD_Chibi_0621test)
+  File "run.py", line 20, in run_one_condition
+    learning(parameter=parameter)
+  File "/new_nas/megu/ECoG_CNNs/learning.py", line 86, in learning
+    str(fold + 1)
+  File "/new_nas/megu/ECoG_CNNs/learning.py", line 150, in fit
+    avg_train_loss = train_loss / used_datasize
+ZeroDivisionError: division by zero
+start time:  1643719066
+end time:  1643719069
+run time:  3

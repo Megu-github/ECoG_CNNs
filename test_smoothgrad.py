@@ -82,7 +82,7 @@ def test_smoothgrad(parameter):
         print("test finish")
 
         # smooth grad
-        make_smoothgrad(net, test_dataloader, parameter)
+        # make_smoothgrad(net, test_dataloader, parameter)
 
     with open(file_path, 'a') as f:
         print("losses: ", losses, "\naccs: ", accs, file=f)

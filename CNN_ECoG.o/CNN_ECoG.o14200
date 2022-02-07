@@ -1,0 +1,24 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-6abed7df-6cf8-3858-12e5-82404cba23a2
+start learning
+Traceback (most recent call last):
+  File "run.py", line 101, in <module>
+    run_one_condition(parameter=parameters.Parameters_Recording_Date_KTMD_Chibi_0621test)
+  File "run.py", line 20, in run_one_condition
+    learning(parameter=parameter)
+  File "/new_nas/megu/ECoG_CNNs/learning.py", line 41, in learning
+    random_state=496)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/sklearn/utils/validation.py", line 63, in inner_f
+    return f(*args, **kwargs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/sklearn/model_selection/_split.py", line 429, in __init__
+    random_state=random_state)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/sklearn/utils/validation.py", line 63, in inner_f
+    return f(*args, **kwargs)
+  File "/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/sklearn/model_selection/_split.py", line 283, in __init__
+    " got n_splits={0}.".format(n_splits))
+ValueError: k-fold cross-validation requires at least one train/test split by setting n_splits=2 or more, got n_splits=1.
+start time:  1643718622
+end time:  1643718623
+run time:  1

@@ -7,28 +7,24 @@ header_name_fold = ('fold1', 'fold2', 'fold3', 'fold4', 'fold5')
 
 def road_csv(reference_dir_path):
 
-    df_fold1 = pd.read_csv(reference_dir_path + '/history_fold1.csv',
-                    names=header_name)
-    df_fold2 = pd.read_csv(reference_dir_path + '/history_fold2.csv',
-                    names=header_name)
-    df_fold3 = pd.read_csv(reference_dir_path + '/history_fold3.csv',
-                    names=header_name)
-    df_fold4 = pd.read_csv(reference_dir_path + '/history_fold4.csv',
-                    names=header_name)
-    df_fold5 = pd.read_csv(reference_dir_path + '/history_fold5.csv',
-                    names=header_name)
+    df_fold1 = pd.read_csv(reference_dir_path + '/history_fold1.csv', names=header_name)
+    df_fold2 = pd.read_csv(reference_dir_path + '/history_fold2.csv', names=header_name)
+    df_fold3 = pd.read_csv(reference_dir_path + '/history_fold3.csv', names=header_name)
+    df_fold4 = pd.read_csv(reference_dir_path + '/history_fold4.csv', names=header_name)
+    df_fold5 = pd.read_csv(reference_dir_path + '/history_fold5.csv', names=header_name)
     
     return df_fold1, df_fold2, df_fold3, df_fold4, df_fold5
 
 
 def df_np_value(train_or_val, loss_or_acc, dir_path):
-    df_fold1, df_fold2, df_fold3, df_fold4, df_fold5 = road_csv(dir_path)
+    df_fold1, df_fold2, df_fold3, df_fold4, df_fold5 = road_csv(dir_path) #  
     
     df = pd.concat([df_fold1[train_or_val + '_' + loss_or_acc], 
                     df_fold2[train_or_val + '_' + loss_or_acc],
                     df_fold3[train_or_val + '_' + loss_or_acc],
                     df_fold4[train_or_val + '_' + loss_or_acc],
-                    df_fold5[train_or_val + '_' + loss_or_acc]], axis=1,)
+                    df_fold5[train_or_val + '_' + loss_or_acc]
+                    ], axis=1,)
     df.columns = header_name_fold
 
     df_mean = df.mean(axis=1)
@@ -61,7 +57,7 @@ def make_graph_mean_std(dir_path):
     plt.ylabel('Loss')
     plt.legend(loc='upper right')
 
-    plt.savefig(dir_path + '/mean_std_val.png')
+    plt.savefig(dir_path + '/mean_std_loss.png')
 
     plt.close()
 
@@ -79,9 +75,11 @@ def make_graph_mean_std(dir_path):
 
     plt.savefig(dir_path + '/mean_std_acc.png')
 
+    plt.close()
+
     return
 
 
 
 if __name__ == "__main__":
-    make_graph_mean_std('/home/megu/ECoG_CNNs/Result/2022-01-09_Anesthesia_KT')
+    make_graph_mean_std('/home/megu/ECoG_CNNs/Result/2022-01-19_Anesthesia_PF_Dropout')
