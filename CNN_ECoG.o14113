@@ -1,0 +1,28 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+####################
+####################
+condition:  0 ('my_dataset', 'adam', 0.05, 0)
+start learning
+  0%|          | 0/5 [00:00<?, ?it/s]
+  0%|          | 0/5 [00:00<?, ?it/s]
+start test and visualizing
+test finish
+  0%|          | 0/20 [00:00<?, ?it/s]100%|██████████| 20/20 [00:00<00:00, 513.77it/s]
+Traceback (most recent call last):
+  File "run.py", line 73, in <module>
+    run_grid_search_single_comparing()
+  File "run.py", line 64, in run_grid_search_single_comparing
+    run_one_condition(parameter=parameter)
+  File "run.py", line 22, in run_one_condition
+    test_smoothgrad(parameter=parameter)
+  File "/new_nas/megu/ECoG_CNNs/test_smoothgrad.py", line 84, in test_smoothgrad
+    make_smoothgrad(net, test_dataloader, parameter)
+  File "/new_nas/megu/ECoG_CNNs/test_smoothgrad.py", line 153, in make_smoothgrad
+    img_raw = img_raw.to(parameter.DEVICE).numpy()
+TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
+start time:  1640346645
+end time:  1640346652
+run time:  7

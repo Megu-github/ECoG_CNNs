@@ -1,0 +1,13 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-6abed7df-6cf8-3858-12e5-82404cba23a2
+Traceback (most recent call last):
+  File "run.py", line 4, in <module>
+    from test_smoothgrad import test_smoothgrad
+  File "/new_nas/megu/ECoG_CNNs/test_smoothgrad.py", line 10, in <module>
+    from torch._C import TreeView
+ImportError: cannot import name 'TreeView' from 'torch._C' (/home/megu/.pyenv/versions/3.7.9/lib/python3.7/site-packages/torch/_C.cpython-37m-x86_64-linux-gnu.so)
+start time:  1641486416
+end time:  1641486416
+run time:  0

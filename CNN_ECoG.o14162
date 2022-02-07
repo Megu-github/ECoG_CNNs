@@ -1,0 +1,12 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-7bbdfddb-899d-ec05-00f1-27e63c9f71b9
+####################
+####################
+condition:  0 ('adam', 0, 0.0005)
+start learning
+  0%|          | 0/18 [00:00<?, ?it/s]
+  0%|          | 0/18 [00:00<?, ?it/s]
+  0%|          | 0/18 [00:00<?, ?it/s]
+  0%|          | 0/18 [00:00<?, ?it/s]

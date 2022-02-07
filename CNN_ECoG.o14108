@@ -1,0 +1,17 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-28902152-e328-c0f8-d470-2167850cee62
+Traceback (most recent call last):
+  File "run.py", line 4, in <module>
+    from test_smoothgrad import test_smoothgrad
+  File "/new_nas/megu/ECoG_CNNs/test_smoothgrad.py", line 17, in <module>
+    import parameters
+  File "/new_nas/megu/ECoG_CNNs/parameters.py", line 103, in <module>
+    class ParametersDebug2(ParametersCommon):
+  File "/new_nas/megu/ECoG_CNNs/parameters.py", line 126, in ParametersDebug2
+    EXPT_NUMBER = EXPT_DATE + '_' + DATASET_CLASS + '_' + OPTIMIZER_CLASS
+TypeError: unsupported operand type(s) for +: 'datetime.date' and 'str'
+start time:  1640341520
+end time:  1640341521
+run time:  1

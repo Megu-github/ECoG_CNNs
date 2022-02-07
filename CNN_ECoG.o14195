@@ -1,0 +1,11 @@
+working directory:  /home/megu/ECoG_CNNs
+omp thread num:  1
+ncpus:  1
+cuda visible devices:  GPU-092c06ec-7745-e924-1b6d-ed9b638cb79a
+Traceback (most recent call last):
+  File "run.py", line 101, in <module>
+    run_one_condition(parameter=parameters.Parameters_Anesthesia_KT_Dropout)
+AttributeError: module 'parameters' has no attribute 'Parameters_Anesthesia_KT_Dropout'
+start time:  1642496860
+end time:  1642496862
+run time:  2
